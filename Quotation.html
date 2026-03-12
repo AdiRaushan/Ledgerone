@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal-2026-001 | LedgerOne LLP Redesign</title>
+    
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    
+    <!-- Icons & Animation -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #0D1B2A; 
+            --accent: #1B4FD8;  
+            --bg: #F8FAFC;      
+            --surface: #FFFFFF; 
+            --text: #0D1B2A;
+            --text-muted: #525252;
+            --border: rgba(0, 0, 0, 0.08);
+            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            border-radius: 0 !important;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .proposal-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 5% 120px;
+        }
+
+        /* --- Header / Navigation --- */
+        .proposal-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 80px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .company-logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .proposal-id {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: #E2E8F0;
+            padding: 4px 12px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            margin-bottom: 100px;
+            padding: 40px 0;
+        }
+
+        .hero h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .hero h1 span {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            color: var(--accent);
+            font-weight: 400;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            max-width: 750px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* --- Client & Info Grid --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            background: var(--surface);
+            padding: 40px;
+            border: 1px solid var(--border);
+            margin-bottom: 100px;
+        }
+
+        .info-item h6 {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .info-item p {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        /* --- Project Goal --- */
+        section {
+            margin-bottom: 120px;
+        }
+
+        .section-header {
+            margin-bottom: 50px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 15px;
+            letter-spacing: 0.2em;
+        }
+
+        .section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            font-style: italic;
+        }
+
+        /* --- Custom Grid System --- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 40px;
+            position: relative;
+        }
+
+        .framework-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .page-node {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            padding: 30px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            transition: border-color 0.3s var(--ease);
+        }
+
+        .page-node:hover {
+            border-color: var(--accent);
+        }
+
+        .page-node .num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .page-node h5 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .page-node p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Table Styling --- */
+        .svc-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+        }
+
+        .svc-table th, .svc-table td {
+            padding: 25px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .svc-table th {
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .svc-table td:first-child {
+            font-weight: 800;
+            width: 35%;
+        }
+
+        /* --- Pricing Architecture --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .price-card {
+            padding: 60px 40px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            position: relative;
+            transition: transform 0.4s var(--ease);
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+
+        .price-card.featured {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .price-header h4 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 10px;
+        }
+
+        .price-header .amount {
+            font-family: 'Instrument Serif', serif;
+            font-size: 4.5rem;
+            line-height: 1;
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.95rem;
+        }
+
+        .price-card.featured .feature-list li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 900px) {
+            .grid-2, .pricing-grid, .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 { font-size: 3.5rem; }
+            .proposal-container { padding: 40px 5%; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); }
+    </style>
+</head>
+
+<body>
+
+    <div class="proposal-container">
+        
+        <!-- TOP NAV -->
+        <nav class="proposal-nav">
+            <div class="company-logo">
+                <i data-lucide="layers" style="color:var(--accent)"></i> LedgerOne LLP
+            </div>
+            <div class="proposal-id">REF: PR01-2026-REDESIGN</div>
+        </nav>
+
+        <!-- HERO -->
+        <header class="hero">
+            <div class="badge" style="display:inline-block; padding: 6px 12px; background: var(--accent); color:white; font-size:0.6rem; font-weight:800; text-transform:uppercase; margin-bottom:20px; letter-spacing:0.1em;">Official Quotation</div>
+            <h1 class="reveal">The Future of <span>Accounting.</span><br>Delivered <span>Remotely.</span></h1>
+            <p class="reveal">LedgerOne LLP is an elite accounting outsourcing firm providing remote bookkeeping, global financial reporting, and Virtual CFO services to businesses and firms in India and overseas.</p>
+        </header>
+
+        <!-- CLIENT INFO -->
+        <div class="info-grid reveal">
+            <div class="info-item">
+                <h6>PROJECT</h6>
+                <p>Website Redesign & SEO</p>
+            </div>
+            <div class="info-item">
+                <h6>CLIENT PROFILE</h6>
+                <p>Accounting Outsourcing (BPO)</p>
+            </div>
+            <div class="info-item">
+                <h6>DATE</h6>
+                <p>March 12, 2026</p>
+            </div>
+            <div class="info-item">
+                <h6>REGIONAL FOCUS</h6>
+                <p>US · Global · Indian SMEs</p>
+            </div>
+        </div>
+
+        <!-- VISION & GOALS -->
+        <section>
+            <div class="section-header">
+                <span class="section-label">01 / Business Integrity</span>
+                <h2 class="section-title reveal">Your Remote <br>Accounting Department.</h2>
+            </div>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h4 style="margin-bottom: 15px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">The Value Prop</h4>
+                    <p style="font-size: 1.1rem; color: var(--text-muted);">We translate LedgerOne's core advantages—<b>professional expertise, secure data handling, and scalable offshore teams</b>—into a digital experience that drives acquisition.</p>
+                </div>
+                <div class="card reveal" style="background: var(--primary); color: white; border: none;">
+                    <h4 style="margin-bottom: 15px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; color: #93C5FD;">Client Impact</h4>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li style="margin-bottom: 15px;"><i data-lucide="shield-check" size="16" style="margin-right:10px;"></i> Professional Accounting Expertise</li>
+                        <li style="margin-bottom: 15px;"><i data-lucide="lock" size="16" style="margin-right:10px;"></i> Secure & Structured Processes</li>
+                        <li><i data-lucide="cloud" size="16" style="margin-right:10px;"></i> Cloud Accounting Mastery</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURE -->
+        <section>
+            <div class="section-header">
+                <span class="section-label">02 / Experience Framework</span>
+                <h2 class="section-title reveal">A Scannable <br>Boardroom Journey.</h2>
+            </div>
+            <div class="framework-visual">
+                <div class="page-node reveal">
+                    <div class="num">01</div>
+                    <div>
+                        <h5>HOME: The Hook</h5>
+                        <p>High-trust headline focusing on <b>Technology-Enabled Accounting & Offshore Support</b>. Clear CTA to "Book Free Consultation" to capture intent immediately.</p>
+                    </div>
+                </div>
+                <div class="page-node reveal">
+                    <div class="num">02</div>
+                    <div>
+                        <h5>ABOUT: The Credibility</h5>
+                        <p>Credentials of the <b>Kingrani Founders</b>. Highlighting our offshore model and remote finance team philosophy for overseas confidence.</p>
+                    </div>
+                </div>
+                <div class="page-node reveal">
+                    <div class="num">03</div>
+                    <div>
+                        <h5>SERVICES: The Engine</h5>
+                        <p>Categorized deep-dive into bookkeeping, AP/RA processing, financial closed, and CFO advisory. Structured to build competence.</p>
+                    </div>
+                </div>
+                <div class="page-node reveal">
+                    <div class="num">04</div>
+                    <div>
+                        <h5>HOW IT WORKS: The Workflow</h5>
+                        <p>Client sends work → LedgerOne processes → Reporting delivered. Highlighting the <b>Reduced Costs & Scalability</b> benefit.</p>
+                    </div>
+                </div>
+                <div class="page-node reveal">
+                    <div class="num">05</div>
+                    <div>
+                        <h5>CONTACT: The Conversion</h5>
+                        <p>Optimized inquiry form with service selection (Bookkeeping / CFO / Compliance) focusing on <b>Overseas & Indian SME</b> leads.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section>
+            <div class="section-header">
+                <span class="section-label">03 / Capability Deep-Dive</span>
+                <h2 class="section-title reveal">Comprehensive <br>Accounting BPO.</h2>
+            </div>
+            <div class="reveal" style="border: 1px solid var(--border);">
+                <table class="svc-table">
+                    <thead>
+                        <tr>
+                            <th>Operational Handle</th>
+                            <th>LedgerOne Precision Deliverable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>📚 Global Bookkeeping</td><td>Daily maintenance, reconciliations, and trial balance integrity.</td></tr>
+                        <tr><td>📊 MIS & Reporting</td><td>Financial statements and tailored management reporting sets.</td></tr>
+                        <tr><td>🧾 AP / AR Cycles</td><td>End-to-end invoice processing and detailed receivable aging reports.</td></tr>
+                        <tr><td>💼 Payroll & Ops</td><td>Payroll journals, expense verification, and compliance coordination.</td></tr>
+                        <tr><td>☁ ERP Deployment</td><td>Expert support for QuickBooks, Xero, and specialized cloud systems.</td></tr>
+                        <tr><td>🧠 Advisory (Virtual CFO)</td><td>Budgeting, scalability advisory, and real-time financial insights.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section id="pricing">
+            <div class="section-header">
+                <span class="section-label">04 / Investment Options</span>
+                <h2 class="section-title reveal">Authorized Pricing.</h2>
+            </div>
+            <div class="pricing-grid">
+                <!-- Option 1: Basic -->
+                <div class="price-card reveal">
+                    <div class="price-header">
+                        <h4>Basic Redesign</h4>
+                        <span class="amount">₹12,000</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li><i data-lucide="check" size="16"></i> 5 Premium Pages (Trust Focused)</li>
+                        <li><i data-lucide="check" size="16"></i> "Book Free Consultation" Integration</li>
+                        <li><i data-lucide="check" size="16"></i> WhatsApp & Calendar Pathways</li>
+                        <li><i data-lucide="check" size="16"></i> Google Search Console Sync</li>
+                        <li><i data-lucide="check" size="16"></i> 5-Day Fast-Track Delivery</li>
+                    </ul>
+                </div>
+
+                <!-- Option 2: Professional -->
+                <div class="price-card featured reveal">
+                    <div style="position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; padding: 4px 10px; font-size: 0.6rem; font-weight: 800; text-transform: uppercase;">⭐ Recommended</div>
+                    <div class="price-header">
+                        <h4>Professional Site</h4>
+                        <span class="amount">₹18,000</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li><i data-lucide="zap" size="16"></i> <b>Full Custom Copywriting</b> (We write all text)</li>
+                        <li><i data-lucide="zap" size="16"></i> Global SEO Strategy (Overseas Keywords)</li>
+                        <li><i data-lucide="zap" size="16"></i> Blog Integration (Search Ranking)</li>
+                        <li><i data-lucide="zap" size="16"></i> Core Web Vitals (95+ Speed Score)</li>
+                        <li><i data-lucide="zap" size="16"></i> <b>30-Day Maintenance & Content Support</b></li>
+                        <li><i data-lucide="zap" size="16"></i> Dedicated US/Global Trust Signals</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER / PITCH -->
+        <footer class="reveal" style="text-align: center; background: var(--surface); padding: 60px; border: 1px solid var(--border);">
+            <p style="font-family: 'Instrument Serif', serif; font-size: 2.5rem; font-style: italic; margin-bottom: 20px;">"Remote Accounting with Precision."</p>
+            <div style="display:flex; justify-content:center; gap:20px; margin-bottom:30px;">
+                <span style="font-size:0.7rem; font-weight:800; opacity:0.6;">✓ SECURE HANDLING</span>
+                <span style="font-size:0.7rem; font-weight:800; opacity:0.6;">✓ SCALABLE TEAMS</span>
+                <span style="font-size:0.7rem; font-weight:800; opacity:0.6;">✓ CLOUD EXPERTISE</span>
+            </div>
+            <p style="text-transform: uppercase; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.2em; color: var(--text-muted);">Official Quotation — LedgerOne LLP Redesign 2026</p>
+        </footer>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray(".reveal").forEach((elem) => {
+            gsap.fromTo(elem, { opacity: 0, y: 30 }, { 
+                opacity: 1, y: 0, duration: 1.2, ease: "power4.out",
+                scrollTrigger: { trigger: elem, start: "top 90%", toggleActions: "play none none none" }
+            });
+        });
+    </script>
+</body>
+
+</html>
