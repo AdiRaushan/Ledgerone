@@ -1,40 +1,31 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LedgerOne LLP | Premium Financial Infrastructure</title>
-
-    <!-- SEO Meta Tags -->
     <meta name="description"
         content="LedgerOne LLP offers virtual accounting, GST, income tax, and compliance services for both Indian and international clients.">
-    <meta property="og:title" content="LedgerOne LLP | Premium Financial Infrastructure">
-    <meta property="og:description" content="Precision virtual accounting, GST, and premium CFO services for startups and global enterprises.">
-    <meta property="og:image" content="https://lh3.googleusercontent.com/sitesv/APaQ0SRGJaML9hEA58Pw6hiorCECdeIC2rtzACC-nzVnLvqgl6jz_fZr6D8HN0CVr22kG-iODziRiiwYh2rRnJddk22ymkNBftCBUxDE3L4sdVbx-JYsOe2nHYFFnz4RrWr1jJCPqEM9QQ0HLGpnqukUyjwKBIHmcyQdaYszvnp67QaqSvqkwqHYZQFinok=w16383">
-    <meta property="og:url" content="https://www.ledgeronellp.com/">
-    <meta property="og:type" content="website">
-
-    <!-- High-End Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
         rel="stylesheet">
-
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
     <style>
         :root {
             --primary: #004d61;
             --accent: #005eff;
-            --bg: #fcfcfc;
-            --surface: #ffffff;
-            --text: #0a0a0a;
-            --text-muted: #666666;
-            --border: rgba(0, 0, 0, 0.06);
+            --bg: #ffffff;
+            --surface: #f7f9fc;
+            --surface2: #eef2f7;
+            --text: #0a0f14;
+            --text-muted: #526071;
+            --border: rgba(0, 0, 0, 0.08);
+            --border2: rgba(0, 0, 0, 0.13);
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
@@ -42,43 +33,59 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            border-radius: 0 !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
+            background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1440px;
+            max-width: 1380px;
             margin: 0 auto;
             padding: 0 5%;
         }
 
-        /* --- Refined Navigation --- */
-        header {
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* ── NAVBAR ── */
+        #navbar {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            background: rgba(252, 252, 252, 0.8);
-            backdrop-filter: saturate(180%) blur(15px);
-            border-bottom: 1px solid var(--border);
             z-index: 1000;
+            transition: background .4s var(--ease), box-shadow .4s, border-color .4s;
+            border-bottom: 1px solid transparent;
+        }
+
+        #navbar.scrolled {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: saturate(180%) blur(16px);
+            -webkit-backdrop-filter: saturate(180%) blur(16px);
+            border-bottom-color: var(--border);
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
         }
 
         .nav-inner {
-            width: 100%;
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 0 40px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            height: 84px;
         }
 
         .logo {
@@ -88,529 +95,2298 @@
             text-decoration: none;
             color: var(--text);
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             letter-spacing: -0.03em;
             text-transform: uppercase;
         }
 
-        .nav-links {
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
             display: flex;
-            gap: 32px;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        .nav-links a {
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .nav-link {
             text-decoration: none;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.81rem;
             font-weight: 600;
-            transition: color 0.3s var(--ease);
+            padding: 8px 13px;
+            transition: color .25s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .nav-links a:hover {
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        /* Mega menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .mega-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background: #fff;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 72px rgba(0, 0, 0, 0.12);
+            min-width: 620px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all .3s var(--ease);
+        }
+
+        .dropdown:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .mega-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .mega-col {
+            padding: 26px 22px;
+            border-right: 1px solid var(--border);
+        }
+
+        .mega-col:last-child {
+            border-right: none;
+        }
+
+        .mega-col-title {
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mega-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            padding: 8px 0;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0, 0, 0, .04);
+            transition: color .2s;
+        }
+
+        .mega-link:last-child {
+            border-bottom: none;
+        }
+
+        .mega-link:hover {
             color: var(--accent);
         }
 
-        .cta-btn {
-            background: var(--text);
+        .ml-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--border2);
+            flex-shrink: 0;
+            margin-top: 7px;
+            transition: background .2s;
+        }
+
+        .mega-link:hover .ml-dot {
+            background: var(--accent);
+        }
+
+        .cta-nav {
+            background: var(--accent);
             color: white;
             padding: 12px 24px;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.77rem;
             font-weight: 700;
-            transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            transition: opacity .3s, transform .3s var(--ease);
+            white-space: nowrap;
+            margin-left: 20px;
         }
 
-        .cta-btn:hover {
-            background: var(--accent);
+        .cta-nav:hover {
+            opacity: .85;
             transform: translateY(-2px);
         }
 
-        /* --- Hero Section: Editorial Style --- */
-        .hero {
-            padding: 200px 0 100px;
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
         }
 
-        .hero-content {
-            max-width: 1000px;
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            transition: all .3s;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 76px;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, .98);
+            backdrop-filter: blur(20px);
+            padding: 16px 5% 32px;
+            border-bottom: 1px solid var(--border);
+            z-index: 999;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all .3s var(--ease);
+            pointer-events: none;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.open {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mob-sec {
+            font-size: .6rem;
+            font-weight: 800;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 14px 0 6px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 11px 0;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: .86rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--text);
+        }
+
+        .mobile-menu a.sub {
+            padding-left: 14px;
+            font-size: .8rem;
+        }
+
+        .mobile-cta {
+            margin-top: 20px;
+            display: block !important;
+            background: var(--accent);
+            color: white !important;
+            text-align: center;
+            padding: 14px !important;
+            font-weight: 700 !important;
+            border-bottom: none !important;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 110px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 55% 65% at 25% 55%, rgba(0, 94, 255, .04), transparent 70%);
+        }
+
+        .hero-left {
+            position: relative;
+            z-index: 1;
+            padding-right: 48px;
+        }
+
+        .hero-right {
+            position: relative;
+            z-index: 1;
         }
 
         .hero-label {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 94, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: .65rem;
             font-weight: 800;
-            font-size: 0.7rem;
+            letter-spacing: .15em;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
             color: var(--accent);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 94, 255, 0.1);
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 6.5rem);
-            line-height: 0.9;
+            font-size: clamp(2.4rem, 4.8vw, 4.4rem);
+            line-height: 1.1;
             font-weight: 800;
-            letter-spacing: -0.04em;
-            margin-bottom: 40px;
+            letter-spacing: -.03em;
+            margin-bottom: 26px;
         }
 
-        .hero h1 span {
+        .hero h1 em {
             font-family: 'Instrument Serif', serif;
             font-style: italic;
             font-weight: 400;
             color: var(--primary);
         }
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 100px;
-            align-items: flex-end;
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            line-height: 1.8;
+            margin-bottom: 38px;
         }
 
-        .hero-desc {
-            font-size: 1.25rem;
+        .hero-actions {
+            display: flex;
+            gap: 13px;
+            flex-wrap: wrap;
+            margin-bottom: 52px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 14px 28px;
+            text-decoration: none;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            transition: opacity .3s, transform .3s var(--ease);
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            opacity: .85;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border2);
             color: var(--text-muted);
+            padding: 14px 28px;
+            text-decoration: none;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            transition: all .3s var(--ease);
+            display: inline-block;
+        }
+
+        .btn-outline:hover {
+            color: var(--text);
+            border-color: var(--text);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
             max-width: 500px;
         }
 
-        /* --- Services: Hover-Reveal Grid --- */
-        .section-header {
-            margin-bottom: 80px;
+        .stat-item h3 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: -.04em;
         }
 
-        .section-header h2 {
-            font-size: 3.5rem;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
+        .stat-item p {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 6px;
         }
 
+        /* Hero collage */
+        .hero-collage {
+            position: relative;
+            height: 560px;
+        }
+
+        .collage-main {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 88%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, .1);
+        }
+
+        .collage-secondary {
+            position: absolute;
+            left: -5%;
+            bottom: 5%;
+            width: 48%;
+            height: 48%;
+            object-fit: cover;
+            border: 8px solid white;
+            border-radius: 4px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .08);
+            z-index: 2;
+        }
+
+        .collage-badge {
+            position: absolute;
+            right: 7%;
+            bottom: 25%;
+            background: var(--primary);
+            color: white;
+            padding: 18px 22px;
+            z-index: 2;
+            box-shadow: 0 14px 48px rgba(0, 77, 97, .35);
+        }
+
+        .collage-badge strong {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -.04em;
+            display: block;
+            line-height: 1;
+        }
+
+        .collage-badge span {
+            font-size: .6rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            opacity: .75;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* ── SHARED ── */
+        .section {
+            padding: 110px 0;
+        }
+
+        .section-alt {
+            background: var(--surface);
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .65rem;
+            font-weight: 800;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 2px;
+            background: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.9rem, 3.7vw, 3.3rem);
+            font-weight: 800;
+            letter-spacing: -.03em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .section-title em {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--primary);
+        }
+
+        .section-sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 540px;
+            line-height: 1.8;
+        }
+
+        .section-head {
+            margin-bottom: 60px;
+        }
+
+        /* ── SERVICES ── */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            border-top: 1px solid var(--border);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
         }
 
-        .service-card {
-            padding: 60px 40px;
+        .svc-card {
+            background: var(--bg);
+            padding: 64px 48px;
+            position: relative;
+            overflow: hidden;
+            transition: background .5s var(--ease), transform .4s var(--ease);
+        }
+
+        .svc-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width .4s var(--ease);
+        }
+
+        .svc-card:hover::after {
+            width: 100%;
+        }
+
+        .svc-card:hover {
+            background: var(--surface);
+            transform: translateY(-3px);
+        }
+
+        .svc-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 94, 255, .08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            color: var(--accent);
+            transition: background .3s;
+        }
+
+        .svc-card:hover .svc-icon {
+            background: rgba(0, 94, 255, .16);
+        }
+
+        .svc-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -.01em;
+            margin-bottom: 13px;
+        }
+
+        .svc-card>p {
+            color: var(--text-muted);
+            font-size: .86rem;
+            margin-bottom: 22px;
+            line-height: 1.7;
+        }
+
+        .svc-bullets {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .svc-bullets li {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: .78rem;
+            color: var(--text-muted);
+            padding: 6px 0;
             border-bottom: 1px solid var(--border);
-            border-right: 1px solid var(--border);
-            transition: background 0.5s var(--ease);
+        }
+
+        .svc-bullets li:last-child {
+            border-bottom: none;
+        }
+
+        .svc-bullets li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .svc-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: .71rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--accent);
+            transition: gap .3s;
+        }
+
+        .svc-cta:hover {
+            gap: 13px;
+        }
+
+        /* ── IMAGE BREAK ── */
+        .img-break {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .img-break-left {
             position: relative;
             overflow: hidden;
         }
 
-        .service-card:hover {
-            background: var(--surface);
+        .img-break-left img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .8s var(--ease);
         }
 
-        .service-card i {
-            margin-bottom: 40px;
+        .img-break-left:hover img {
+            transform: scale(1.04);
+        }
+
+        .img-break-right {
+            background: var(--primary);
+            padding: 72px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .img-break-right h2 {
+            font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -.03em;
+            line-height: 1.2;
+            color: white;
+            margin-bottom: 22px;
+        }
+
+        .img-break-right h2 em {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: #7dd8ef;
+        }
+
+        .img-break-right p {
+            color: rgba(255, 255, 255, .62);
+            font-size: .9rem;
+            line-height: 1.76;
+            margin-bottom: 34px;
+        }
+
+        .btn-white {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
             color: var(--primary);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
+            padding: 14px 28px;
+            text-decoration: none;
+            font-size: .78rem;
             font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            transition: all .3s var(--ease);
         }
 
-        .service-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
+        .btn-white:hover {
+            background: var(--surface);
+            transform: translateY(-2px);
         }
 
-        /* --- Leadership: Minimalist List --- */
-        .leader-item {
+        /* ── ABOUT ── */
+        .about-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border);
+            grid-template-columns: 1fr 1fr;
+            gap: 90px;
             align-items: center;
         }
 
-        .leader-name {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+        .about-images {
+            position: relative;
+            height: 540px;
         }
 
-        .leader-role {
-            font-weight: 600;
-            color: var(--accent);
-            text-transform: uppercase;
-            font-size: 0.75rem;
+        .about-img-main {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 78%;
+            height: 78%;
+            object-fit: cover;
+            box-shadow: 0 22px 68px rgba(0, 0, 0, .12);
         }
 
-        /* --- Contact: Split Layout --- */
-        .contact-section {
-            background: #0a0a0a;
+        .about-img-accent {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 48%;
+            height: 48%;
+            object-fit: cover;
+            border: 6px solid white;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .1);
+        }
+
+        .about-img-badge {
+            position: absolute;
+            right: 4%;
+            bottom: 22%;
+            background: var(--accent);
             color: white;
-            padding: 120px 0;
+            padding: 16px 20px;
+            z-index: 2;
         }
 
-        .contact-grid {
+        .about-img-badge strong {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -.04em;
+            display: block;
+            line-height: 1;
+        }
+
+        .about-img-badge span {
+            font-size: .58rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            opacity: .82;
+            margin-top: 3px;
+            display: block;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            font-size: .91rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .about-metrics {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 100px;
+            gap: 20px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
         }
 
-        .input-group {
-            margin-bottom: 40px;
+        .am-item h4 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -.04em;
+        }
+
+        .am-item p {
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        /* ── WHY ── */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .why-card {
+            background: var(--bg);
+            padding: 56px 40px;
+            transition: background .4s var(--ease);
+        }
+
+        .why-card:hover {
+            background: var(--surface2);
+        }
+
+        .why-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3rem;
+            font-style: italic;
+            color: rgba(0, 77, 97, .18);
+            line-height: 1;
+            margin-bottom: 16px;
+            display: block;
+            transition: color .3s;
+        }
+
+        .why-card:hover .why-num {
+            color: var(--primary);
+        }
+
+        .why-card h4 {
+            font-size: .9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            margin-bottom: 11px;
+        }
+
+        .why-card p {
+            font-size: .81rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ── MARQUEE ── */
+        .marquee-section {
+            background: var(--primary);
+            padding: 90px 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 44px;
+            white-space: nowrap;
+            animation: marquee 28s linear infinite;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .marquee-item {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.7rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, .5);
+            flex-shrink: 0;
+        }
+
+        .marquee-item b {
+            color: white;
+            font-style: normal;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .62rem;
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        /* ── REVIEWS ── */
+        .reviews-featured {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-bottom: 1px;
+        }
+
+        .review-highlight {
+            background: var(--primary);
+            padding: 52px 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .rh-quote-icon {
+            font-family: 'Instrument Serif', serif;
+            font-size: 4.5rem;
+            color: rgba(255, 255, 255, .15);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .rh-quote {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.38rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, .92);
+            line-height: 1.65;
+            margin-bottom: 36px;
+        }
+
+        .rh-stars {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 28px;
+        }
+
+        .rh-stars span {
+            color: rgba(255, 255, 255, .85);
+            font-size: 14px;
+        }
+
+        .rh-person {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .rh-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, .15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: .92rem;
+            color: white;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .rh-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rh-name {
+            font-weight: 700;
+            font-size: .92rem;
+            color: white;
+        }
+
+        .rh-role {
+            font-size: .72rem;
+            color: rgba(255, 255, 255, .58);
+            margin-top: 2px;
+        }
+
+        .rh-country {
+            font-size: 1.3rem;
+            margin-left: auto;
+        }
+
+        .reviews-right {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            background: var(--border);
+            gap: 1px;
+        }
+
+        .review-card {
+            background: var(--bg);
+            padding: 48px 48px;
+            transition: background .3s;
+        }
+
+        .review-card:hover {
+            background: var(--surface);
+        }
+
+        .rv-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 14px;
+        }
+
+        .rv-stars span {
+            color: #f5a623;
+            font-size: 13px;
+        }
+
+        .rv-text {
+            font-size: .88rem;
+            color: var(--text-muted);
+            line-height: 1.76;
+            margin-bottom: 18px;
+            font-style: italic;
+            position: relative;
+            padding-left: 22px;
+        }
+
+        .rv-text::before {
+            content: '\201C';
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            line-height: 0;
+            position: absolute;
+            top: 14px;
+            left: 0;
+        }
+
+        .rv-person {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .rv-avatar {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: .8rem;
+            color: white;
+            flex-shrink: 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 94, 255, 0.2);
+        }
+
+        .rv-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rv-name {
+            font-weight: 700;
+            font-size: .83rem;
+        }
+
+        .rv-role {
+            font-size: .7rem;
+            color: var(--text-muted);
+        }
+
+        .rv-country {
+            margin-left: auto;
+            font-size: 1.1rem;
+        }
+
+        .reviews-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-top: none;
+        }
+
+        .review-card-sm {
+            background: var(--bg);
+            padding: 42px 40px;
+            transition: background .3s;
+        }
+
+        .review-card-sm:hover {
+            background: var(--surface);
+        }
+
+        .rcs-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .rcs-stars {
+            display: flex;
+            gap: 3px;
+        }
+
+        .rcs-stars span {
+            color: #f5a623;
+            font-size: 12px;
+        }
+
+        .rcs-flag {
+            font-size: 1.15rem;
+        }
+
+        .rcs-text {
+            font-size: .84rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            margin-bottom: 18px;
+            font-style: italic;
+            padding-left: 20px;
             position: relative;
         }
 
-        .input-group label {
-            display: block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #888;
+        .rcs-text::before {
+            content: '\201C';
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            line-height: 0;
+            position: absolute;
+            top: 12px;
+            left: 0;
         }
 
-        .input-group input,
-        .input-group textarea {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #333;
-            padding: 15px 0;
-            color: white;
-            font-family: inherit;
-            font-size: 1.1rem;
-            transition: border-color 0.3s ease;
+        .rcs-person {
+            display: flex;
+            align-items: center;
+            gap: 11px;
         }
 
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .submit-large {
-            background: white;
-            color: black;
-            border: none;
-            padding: 25px 50px;
+        .rcs-avatar {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--primary), #008eb3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.3s ease;
-        }
-
-        .submit-large:hover {
-            background: var(--accent);
+            font-size: .7rem;
             color: white;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 77, 97, 0.15);
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 1024px) {
-
-            .hero-grid,
-            .contact-grid,
-            .leader-item {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .hero h1 {
-                font-size: 4rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
+        .rcs-name {
+            font-weight: 700;
+            font-size: .8rem;
         }
-        /* --- Workflow / Process --- */
+
+        .rcs-role {
+            font-size: .68rem;
+            color: var(--text-muted);
+        }
+
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 52px;
+            padding: 24px 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            display: inline-flex;
+        }
+
+        .rating-score {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -.05em;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        .rating-stars-big {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 5px;
+        }
+
+        .rating-stars-big span {
+            color: #f5a623;
+            font-size: 16px;
+        }
+
+        .rating-label {
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--text-muted);
+        }
+
+        /* ── PROCESS ── */
         .process-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 1px;
             background: var(--border);
             border: 1px solid var(--border);
         }
 
         .process-card {
-            background: var(--bg);
-            padding: 60px 40px;
-            transition: background 0.4s var(--ease);
+            background: var(--surface);
+            padding: 64px 44px;
+            transition: background .4s var(--ease);
         }
 
         .process-card:hover {
-            background: var(--surface);
+            background: var(--surface2);
         }
 
-        .process-card .step {
+        .p-step {
             font-family: 'Instrument Serif', serif;
-            font-size: 3rem;
-            color: var(--primary);
+            font-size: 2.7rem;
+            color: rgba(0, 77, 97, .17);
             line-height: 1;
             margin-bottom: 20px;
             display: block;
+            transition: color .3s;
         }
 
-        /* --- Industries --- */
-        .industry-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border);
-            transition: padding 0.4s var(--ease);
+        .process-card:hover .p-step {
+            color: var(--primary);
         }
 
-        .industry-item:hover {
-            padding-left: 30px;
-            color: var(--accent);
-        }
-
-        .industry-item h4 {
-            font-size: 1.8rem;
+        .process-card h4 {
+            font-size: .9rem;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: .04em;
+            margin-bottom: 11px;
         }
 
-        /* --- Philosphy / Marquee --- */
-        .edge-section {
-            background: var(--primary);
-            color: white;
-            padding: 80px 0;
+        .process-card p {
+            font-size: .81rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ── GLOBE STRIP ── */
+        .globe-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            height: 260px;
+        }
+
+        .globe-cell {
+            position: relative;
             overflow: hidden;
         }
 
-        .marquee-container {
-            display: flex;
-            white-space: nowrap;
-            gap: 40px;
-            animation: marquee 20s linear infinite;
+        .globe-cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .7s var(--ease);
         }
 
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .globe-cell:hover img {
+            transform: scale(1.07);
         }
 
-        .marquee-text {
+        .globe-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 77, 97, .75) 0%, transparent 60%);
+        }
+
+        .globe-label {
+            position: absolute;
+            bottom: 18px;
+            left: 18px;
+            font-size: .64rem;
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        /* ── LEADERSHIP ── */
+        .leader-list {
+            border-top: 1px solid var(--border);
+        }
+
+        .leader-row {
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr;
+            align-items: center;
+            padding: 42px 0;
+            border-bottom: 1px solid var(--border);
+            transition: padding-left .4s var(--ease);
+        }
+
+        .leader-row:hover {
+            padding-left: 18px;
+        }
+
+        .leader-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        .leader-role {
+            font-size: .66rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--accent);
+            margin-top: 7px;
+        }
+
+        .leader-bio {
+            font-size: .82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .leader-arrow {
+            justify-self: end;
+            color: var(--text-muted);
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            background: var(--primary);
+            padding: 130px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 380px;
+            height: 380px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 50%;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -70px;
+            left: -70px;
+            width: 260px;
+            height: 260px;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 50%;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2.3rem, 5.2vw, 4.8rem);
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: 1.1;
+            margin-bottom: 22px;
+            color: white;
+            position: relative;
+        }
+
+        .cta-section h2 em {
             font-family: 'Instrument Serif', serif;
-            font-size: 4rem;
             font-style: italic;
+            font-weight: 400;
+            color: #7dd8ef;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, .6);
+            font-size: .96rem;
+            margin-bottom: 42px;
+            position: relative;
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .btn-cta-outline {
+            border: 1px solid rgba(255, 255, 255, .3);
+            color: rgba(255, 255, 255, .8);
+            padding: 14px 28px;
+            text-decoration: none;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            transition: all .3s var(--ease);
+        }
+
+        .btn-cta-outline:hover {
+            border-color: white;
+            color: white;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: 76px 0 38px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 56px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            font-size: .82rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            max-width: 280px;
+            margin-top: 16px;
+        }
+
+        .footer-col h5 {
+            font-size: .62rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: .81rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 4px 0;
+            transition: color .2s;
+        }
+
+        .footer-col a:hover {
+            color: var(--text);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 26px;
+            border-top: 1px solid var(--border);
+            font-size: .68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 22px;
+        }
+
+        .footer-legal a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .footer-legal a:hover {
+            color: var(--text);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-btn {
+            width: 34px;
+            height: 34px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all .3s;
+        }
+
+        .social-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ── ANIMATIONS ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(32px);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity .75s var(--ease), transform .75s var(--ease);
+        }
+
+        .fade-up-delay-1 {
+            transition-delay: .1s !important;
+        }
+
+        .fade-up-delay-2 {
+            transition-delay: .2s !important;
+        }
+
+        .fade-up-delay-3 {
+            transition-delay: .3s !important;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1100px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 120px 0 80px;
+            }
+
+            .hero-left {
+                padding-right: 0;
+                max-width: 640px;
+            }
+
+            .hero-right {
+                display: none;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-images {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 36px;
+            }
+
+            .reviews-featured {
+                grid-template-columns: 1fr;
+            }
+
+            .globe-strip {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .img-break {
+                grid-template-columns: 1fr;
+            }
+
+            .img-break-left {
+                height: 300px;
+            }
+
+            .img-break-right {
+                padding: 56px 40px;
+            }
+        }
+
+        @media(max-width:768px) {
+
+            .nav-center,
+            .cta-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reviews-row {
+                grid-template-columns: 1fr;
+            }
+
+            .leader-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .leader-arrow {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .mega-menu {
+                min-width: 90vw;
+                left: 0;
+                transform: translateX(0) translateY(-8px);
+            }
+
+            .dropdown:hover .mega-menu {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        @media(max-width:540px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.6rem;
+            }
+
+            .svc-card {
+                padding: 34px 22px;
+            }
+
+            .globe-strip {
+                height: 200px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <div class="container nav-inner">
+    <!-- NAVBAR -->
+    <header id="navbar">
+        <div class="nav-inner">
             <a href="#" class="logo">
-                <i data-lucide="layers" size="20"></i> LedgerOne
+                <div class="logo-icon"><i data-lucide="layers" size="15" style="color:white;"></i></div>
+                LedgerOne <span style="font-weight:300;opacity:.38;margin-left:2px;">LLP</span>
             </a>
-            <nav class="nav-links">
-                <a href="#services">Capabilities</a>
-                <a href="#directors">Leadership</a>
-                <a href="#process">Workflow</a>
-                <a href="#contact">Contact</a>
+
+            <nav class="nav-center">
+                <a href="#home" class="nav-link">Home</a>
+
+                <!-- Dropdown 1 -->
+                <div class="dropdown">
+                    <a href="#services" class="nav-link">Global Accounting <i data-lucide="chevron-down"
+                            size="12"></i></a>
+                    <div class="mega-menu">
+                        <div class="mega-inner">
+                            <div class="mega-col">
+                                <div class="mega-col-title">Bookkeeping</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Daily Bookkeeping</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Bank
+                                    Reconciliation</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>General Ledger
+                                    Mgmt</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Payroll Processing</a>
+                            </div>
+                            <div class="mega-col">
+                                <div class="mega-col-title">Reporting</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>MIS Reports</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>P&L Statements</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Balance Sheet Prep</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Cash Flow Analysis</a>
+                            </div>
+                            <div class="mega-col">
+                                <div class="mega-col-title">CFO Services</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Virtual CFO</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>AP / AR Management</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Budgeting &
+                                    Forecast</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Investor Reporting</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropdown 2 -->
+                <div class="dropdown">
+                    <a href="#services" class="nav-link">Company Setup <i data-lucide="chevron-down" size="12"></i></a>
+                    <div class="mega-menu">
+                        <div class="mega-inner">
+                            <div class="mega-col">
+                                <div class="mega-col-title">Registration</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Private Limited
+                                    Co.</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>LLP Formation</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>OPC Registration</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Partnership Firm</a>
+                            </div>
+                            <div class="mega-col">
+                                <div class="mega-col-title">Compliance</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>ROC Filings</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Secretarial
+                                    Services</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Annual Compliance</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Director KYC</a>
+                            </div>
+                            <div class="mega-col">
+                                <div class="mega-col-title">Advisory</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Corporate
+                                    Structuring</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>FDI & FEMA</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Startup India</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Shareholder
+                                    Agreements</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropdown 3 -->
+                <div class="dropdown">
+                    <a href="#services" class="nav-link">Indian Tax <i data-lucide="chevron-down" size="12"></i></a>
+                    <div class="mega-menu">
+                        <div class="mega-inner">
+                            <div class="mega-col">
+                                <div class="mega-col-title">GST</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>GST Registration</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Monthly / Qtrly
+                                    Returns</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>GSTR-9 Annual</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>GST Audit &
+                                    Notices</a>
+                            </div>
+                            <div class="mega-col">
+                                <div class="mega-col-title">Income Tax</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>ITR Filing (All
+                                    types)</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Tax Planning</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>TDS / TCS
+                                    Compliance</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Advance Tax</a>
+                            </div>
+                            <div class="mega-col">
+                                <div class="mega-col-title">Business Compliance</div>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Tax Audit</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Transfer Pricing</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Notice &
+                                    Assessment</a>
+                                <a href="#services" class="mega-link"><span class="ml-dot"></span>NRI Taxation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </nav>
-            <a href="#contact" class="cta-btn">Start Consultation</a>
+
+            <a href="#contact" class="cta-nav">Book Consultation</a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
         </div>
     </header>
 
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#home">Home</a>
+        <div class="mob-sec">Global Accounting</div>
+        <a href="#services" class="sub">Bookkeeping & Reconciliation</a>
+        <a href="#services" class="sub">MIS & Management Reporting</a>
+        <a href="#services" class="sub">Virtual CFO Services</a>
+        <a href="#services" class="sub">AP / AR Management</a>
+        <div class="mob-sec">Company Setup</div>
+        <a href="#services" class="sub">Private Limited / LLP</a>
+        <a href="#services" class="sub">ROC & Secretarial</a>
+        <a href="#services" class="sub">FDI & FEMA Advisory</a>
+        <a href="#services" class="sub">Startup India Registration</a>
+        <div class="mob-sec">Indian Tax</div>
+        <a href="#services" class="sub">GST Registration & Returns</a>
+        <a href="#services" class="sub">ITR Filing (All Types)</a>
+        <a href="#services" class="sub">TDS / TCS Compliance</a>
+        <a href="#services" class="sub">Tax Audit</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="mobile-cta">Book Consultation</a>
+    </div>
+
     <main>
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <span class="hero-label">High-Fidelity Financial Infrastructure</span>
-                    <h1 class="reveal-text">Precision <span>Accounting</span> for the Global <span>Enterprise.</span>
-                    </h1>
-                    <div class="hero-grid">
-                        <p class="hero-desc">We offer high-precision virtual accounting, GST, and compliance advisory for Indian and international clients, ensuring businesses scale without friction.</p>
-                        <div style="display: flex; gap: 40px;">
-                            <div>
-                                <h3 style="font-size: 2rem;">100%</h3>
-                                <p style="font-size: 0.7rem; font-weight: 800; color: var(--text-muted);">COMPLIANCE
-                                    RATE</p>
-                            </div>
-                            <div>
-                                <h3 style="font-size: 2rem;">24/7</h3>
-                                <p style="font-size: 0.7rem; font-weight: 800; color: var(--text-muted);">VIRTUAL CFO
-                                </p>
-                            </div>
-                        </div>
+
+        <!-- HERO -->
+        <section class="hero container" id="home">
+            <div class="hero-left">
+                <span class="hero-label">High-Fidelity Financial Infrastructure</span>
+                <h1 class="reveal-text">Global<br><em> Precision</em><br> Accounting</h1>
+                <p class="hero-sub">Virtual accounting, GST, global compliance & CFO advisory for cross-border
+                    businesses.</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-primary">Book Free Consultation</a>
+                    <a href="tel:+911234567890" class="btn-outline" style="display:flex;align-items:center;gap:8px;"><i
+                            data-lucide="phone" size="14"></i> Call Us Now</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <h3>100%</h3>
+                        <p>Compliance</p>
                     </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>CFO Advisory</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>15+</h3>
+                        <p>Countries</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-collage">
+                    <img class="collage-main"
+                        src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Finance professionals">
+                    <img class="collage-secondary"
+                        src="https://images.unsplash.com/photo-1725258080098-727051947997?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Financial data">
+                    <div class="collage-badge"><strong>₹500Cr+</strong><span>Revenue Managed</span></div>
                 </div>
             </div>
         </section>
 
-        <section id="services" style="padding: 100px 0;">
+        <!-- SERVICES -->
+        <section id="services" class="section section-alt">
             <div class="container">
-                <div class="section-header">
-                    <span class="hero-label">01 / Services</span>
-                    <h2>Surgical precision. <br>Minimal overhead.</h2>
+                <div class="section-head fade-up">
+                    <span class="section-label">01 / Capabilities</span>
+                    <h2 class="section-title">Surgical precision.<br><em>Minimal overhead.</em></h2>
+                    <p class="section-sub">Three pillars of world-class financial infrastructure — delivered with
+                        institutional quality, at a fraction of the cost.</p>
                 </div>
                 <div class="services-grid">
-                    <div class="service-card">
-                        <i data-lucide="bar-chart-3" size="32"></i>
-                        <h3>Virtual CFO</h3>
-                        <p>Strategic financial leadership, management reporting, and bookkeeping tailored for the modern startup
-                            ecosystem.</p>
+                    <div class="svc-card fade-up">
+                        <div class="svc-icon"><i data-lucide="globe-2" size="24"></i></div>
+                        <h3>Global Accounting</h3>
+                        <p>Offshore accounting delivery for international CPA firms and enterprises, powered by India's
+                            best CA hub.</p>
+                        <ul class="svc-bullets">
+                            <li>Bookkeeping & Bank Reconciliation</li>
+                            <li>Accounts Payable / Receivable</li>
+                            <li>MIS & Management Reporting</li>
+                            <li>Virtual CFO Services</li>
+                            <li>Financial Statement Preparation</li>
+                        </ul>
+                        <a href="#contact" class="svc-cta">Enquire Now <i data-lucide="arrow-right" size="14"></i></a>
                     </div>
-                    <div class="service-card">
-                        <i data-lucide="shield-check" size="32"></i>
-                        <h3>Compliance</h3>
-                        <p>Flawless GST, Income Tax filings and regulatory coordination to ensure zero-penalty, audit-ready operations.
-                        </p>
+                    <div class="svc-card fade-up fade-up-delay-1">
+                        <div class="svc-icon"><i data-lucide="building-2" size="24"></i></div>
+                        <h3>Company Setup & Compliance</h3>
+                        <p>End-to-end business registration and structural advisory for Indian entities and cross-border
+                            expansion.</p>
+                        <ul class="svc-bullets">
+                            <li>Private Limited / LLP Registration</li>
+                            <li>Corporate Structuring & FDI</li>
+                            <li>ROC & Secretarial Compliance</li>
+                            <li>Startup India Registration</li>
+                            <li>Shareholder & JV Agreements</li>
+                        </ul>
+                        <a href="#contact" class="svc-cta">Enquire Now <i data-lucide="arrow-right" size="14"></i></a>
                     </div>
-                    <div class="service-card">
-                        <i data-lucide="globe-2" size="32"></i>
-                        <h3>Global Delivery</h3>
-                        <p>Reliable, offshore accounting support for foreign CPA firms, powered by our specialized Indian
-                            hub.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 02: Workflow -->
-        <section id="process" style="padding: 120px 0; background: var(--surface);">
-            <div class="container">
-                <div class="section-header">
-                    <span class="hero-label">02 / Workflow</span>
-                    <h2>The LedgerOne <br>Method.</h2>
-                </div>
-                <div class="process-grid">
-                    <div class="process-card">
-                        <span class="step">01.</span>
-                        <h3 style="text-transform: uppercase; margin-bottom: 15px;">Audit</h3>
-                        <p style="color: var(--text-muted);">Deep analysis of your current financial stack and compliance
-                            posture.</p>
-                    </div>
-                    <div class="process-card">
-                        <span class="step">02.</span>
-                        <h3 style="text-transform: uppercase; margin-bottom: 15px;">Integrate</h3>
-                        <p style="color: var(--text-muted);">Seamless cloud deployment with zero disruption to your daily
+                    <div class="svc-card fade-up fade-up-delay-2">
+                        <div class="svc-icon"><i data-lucide="shield-check" size="24"></i></div>
+                        <h3>Indian Tax & Compliance</h3>
+                        <p>Flawless GST, Income Tax and regulatory management ensuring zero-penalty, audit-ready
                             operations.</p>
-                    </div>
-                    <div class="process-card">
-                        <span class="step">03.</span>
-                        <h3 style="text-transform: uppercase; margin-bottom: 15px;">Monitor</h3>
-                        <p style="color: var(--text-muted);">24/7 oversight and real-time management reporting for 100%
-                            clarity.</p>
-                    </div>
-                    <div class="process-card">
-                        <span class="step">04.</span>
-                        <h3 style="text-transform: uppercase; margin-bottom: 15px;">Scale</h3>
-                        <p style="color: var(--text-muted);">Continuous strategic advisory to fuel your global expansion
-                            goals.</p>
+                        <ul class="svc-bullets">
+                            <li>GST Registration & Monthly Returns</li>
+                            <li>Income Tax Filing (All Types)</li>
+                            <li>TDS / TCS Compliance</li>
+                            <li>Tax Audit & Transfer Pricing</li>
+                            <li>Notice Handling & Assessment</li>
+                        </ul>
+                        <a href="#contact" class="svc-cta">Enquire Now <i data-lucide="arrow-right" size="14"></i></a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 03: Industries -->
-        <section id="industries" style="padding: 120px 0;">
-            <div class="container">
-                <div class="section-header">
-                    <span class="hero-label">03 / Focus</span>
-                    <h2>Who we empower.</h2>
-                </div>
-                <div class="industry-list" id="industry-list">
-                    <div class="industry-item">
-                        <h4>SaaS & Startups</h4>
-                        <i data-lucide="arrow-up-right"></i>
-                    </div>
-                    <div class="industry-item">
-                        <h4>Global CPA Firms</h4>
-                        <i data-lucide="arrow-up-right"></i>
-                    </div>
-                    <div class="industry-item">
-                        <h4>E-commerce Teams</h4>
-                        <i data-lucide="arrow-up-right"></i>
-                    </div>
-                    <div class="industry-item">
-                        <h4>Fintech Innovators</h4>
-                        <i data-lucide="arrow-up-right"></i>
-                    </div>
-                </div>
+        <!-- IMAGE BREAK -->
+        <div class="img-break">
+            <div class="img-break-left">
+                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1000&q=85&auto=format&fit=crop"
+                    alt="Global business team">
             </div>
-        </section>
-
-        <!-- Philosophy Marquee -->
-        <div class="edge-section">
-            <div class="marquee-container">
-                <div class="marquee-text">Surgical Precision — Zero Penalty — Global Trust — 100% Compliance — Surgical
-                    Precision — Zero Penalty — Global Trust — 100% Compliance —</div>
-                <div class="marquee-text">Surgical Precision — Zero Penalty — Global Trust — 100% Compliance — Surgical
-                    Precision — Zero Penalty — Global Trust — 100% Compliance —</div>
+            <div class="img-break-right">
+                <span class="section-label" style="color:rgba(125,216,239,.9);">Global Reach</span>
+                <h2>One team. <em>Every timezone.</em></h2>
+                <p>From New Delhi to New York, our distributed team of Chartered Accountants and compliance specialists
+                    ensures your business never sleeps on its finances.</p>
+                <a href="#contact" class="btn-white">Start Today <i data-lucide="arrow-right" size="14"></i></a>
             </div>
         </div>
 
-        <section id="directors" style="padding: 120px 0;">
+        <!-- ABOUT -->
+        <section id="about" class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="hero-label">04 / Leadership</span>
-                    <h2>Expert Guided.</h2>
-                </div>
-                <div class="leadership-list">
-                    <div class="leader-item">
-                        <div class="leader-name">Kavita Kingrani</div>
-                        <div class="leader-role">Founder | Virtual CFO & Compliance Advisory</div>
-                        <p style="color: var(--text-muted);">Strategic growth & regulatory excellence.</p>
+                <div class="about-grid">
+                    <div class="about-images fade-up">
+                        <img class="about-img-main"
+                            src="https://images.unsplash.com/photo-1664575198308-3959904fa430?w=800&q=85&auto=format&fit=crop"
+                            alt="Finance team">
+                        <img class="about-img-accent"
+                            src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&q=80&auto=format&fit=crop"
+                            alt="Document review">
+                        <div class="about-img-badge"><strong>2018</strong><span>Founded</span></div>
                     </div>
-                    <div class="leader-item">
-                        <div class="leader-name">CA Deepesh Kingrani</div>
-                        <div class="leader-role">Head of Delivery | International Accounting</div>
-                        <p style="color: var(--text-muted);">Leader of global offshore accounting delivery.</p>
-                    </div>
-                    <div class="leader-item">
-                        <div class="leader-name">Ramesh Chand Kingrani</div>
-                        <div class="leader-role">Founder | Business Strategy Advisor</div>
-                        <p style="color: var(--text-muted);">Expert advisory in business architecture and strategy.</p>
+                    <div class="about-text fade-up fade-up-delay-1">
+                        <span class="section-label">02 / About Us</span>
+                        <h2 class="section-title" style="margin-bottom:22px;">Built for the <em>modern</em> global
+                            economy.</h2>
+                        <p>LedgerOne LLP was founded on a single conviction: growing businesses deserve
+                            institutional-grade financial infrastructure — without institutional overhead.</p>
+                        <p>We operate as a distributed team of chartered accountants, compliance specialists, and
+                            financial strategists. Our clients span SaaS startups, global CPA firms, e-commerce
+                            operators, and fintech innovators from New Delhi to New York.</p>
+                        <p>Every engagement is guided by our founders who bring decades of combined expertise in Indian
+                            and international accounting standards including US GAAP, IFRS and Ind AS.</p>
+                        <div class="about-metrics">
+                            <div class="am-item">
+                                <h4>₹500Cr+</h4>
+                                <p>Client Revenue Managed</p>
+                            </div>
+                            <div class="am-item">
+                                <h4>15+</h4>
+                                <p>Countries Served</p>
+                            </div>
+                            <div class="am-item">
+                                <h4>500+</h4>
+                                <p>Active Clients</p>
+                            </div>
+                            <div class="am-item">
+                                <h4>Zero</h4>
+                                <p>Compliance Penalties</p>
+                            </div>
+                        </div>
+                        <a href="#contact" class="btn-primary" style="display:inline-block;margin-top:32px;">Talk to Our
+                            Team</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="contact-section">
+        <!-- WHY CHOOSE US -->
+        <section class="section section-alt">
             <div class="container">
-                <div class="contact-grid">
-                    <div>
-                        <span class="hero-label" style="color: #555;">05 / Connect</span>
-                        <h2 style="font-size: 4rem; line-height: 1;">Ready to <br>optimize?</h2>
-                        <p style="margin-top: 30px; color: #888; max-width: 350px;">
-                            Join the enterprises that trust LedgerOne for their financial backbone.
+                <div class="section-head fade-up">
+                    <span class="section-label">03 / Advantage</span>
+                    <h2 class="section-title">Why the world<br><em>chooses LedgerOne.</em></h2>
+                </div>
+                <div class="why-grid">
+                    <div class="why-card fade-up">
+                        <span class="why-num">01</span>
+                        <h4>Dedicated Team</h4>
+                        <p>Named CAs and compliance experts assigned exclusively to your account. Not a shared inbox — a
+                            real team.</p>
+                    </div>
+                    <div class="why-card fade-up fade-up-delay-1">
+                        <span class="why-num">02</span>
+                        <h4>Real-Time Reporting</h4>
+                        <p>Cloud-first delivery with live dashboards so you have full financial clarity from anywhere on
+                            the planet.</p>
+                    </div>
+                    <div class="why-card fade-up fade-up-delay-2">
+                        <span class="why-num">03</span>
+                        <h4>Zero-Penalty Promise</h4>
+                        <p>Proactive compliance calendars and dual-review processes ensure zero missed deadlines — ever.
                         </p>
                     </div>
-                    <form>
-                        <div class="input-group">
-                            <label>Full Name</label>
-                            <input type="text" placeholder="Jane Doe">
-                        </div>
-                        <div class="input-group">
-                            <label>Work Email</label>
-                            <input type="email" placeholder="jane@ledgerone.com">
-                        </div>
-                        <div class="input-group">
-                            <label>Message</label>
-                            <textarea rows="4" placeholder="How can we assist your growth?"></textarea>
-                        </div>
-                        <button class="submit-large">Send Inquiry</button>
-                    </form>
+                    <div class="why-card fade-up fade-up-delay-3">
+                        <span class="why-num">04</span>
+                        <h4>Global + Local Expertise</h4>
+                        <p>Deep Indian regulations knowledge combined with international GAAP standards — bridging both
+                            worlds seamlessly.</p>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- MARQUEE -->
+        <div class="marquee-section">
+            <div class="marquee-track">
+                <div class="marquee-item"><b>•</b>Surgical Precision</div>
+                <div class="marquee-item"><b>•</b>Zero Penalty</div>
+                <div class="marquee-item"><b>•</b>Global Trust</div>
+                <div class="marquee-item"><b>•</b>100% Compliance</div>
+                <div class="marquee-item"><b>•</b>Virtual CFO</div>
+                <div class="marquee-item"><b>•</b>Offshore Delivery</div>
+                <div class="marquee-item"><b>•</b>Surgical Precision</div>
+                <div class="marquee-item"><b>•</b>Zero Penalty</div>
+                <div class="marquee-item"><b>•</b>Global Trust</div>
+                <div class="marquee-item"><b>•</b>100% Compliance</div>
+                <div class="marquee-item"><b>•</b>Virtual CFO</div>
+                <div class="marquee-item"><b>•</b>Offshore Delivery</div>
+            </div>
+        </div>
+
+        <!-- REVIEWS -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head fade-up">
+                    <span class="section-label">04 / Client Reviews</span>
+                    <h2 class="section-title">Trusted by teams<br><em>across the globe.</em></h2>
+                    <div class="rating-bar">
+                        <div class="rating-score">4.9</div>
+                        <div>
+                            <div class="rating-stars-big"><span>★★★★★</span></div>
+                            <div class="rating-label">Based on 200+ verified client reviews</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-featured fade-up">
+                    <div class="review-highlight">
+                        <div>
+                            <div class="rh-quote-icon">&ldquo;</div>
+                            <div class="rh-stars"><span>★★★★★</span></div>
+                            <p class="rh-quote">LedgerOne transformed our entire offshore accounting operation. What we
+                                expected to take 6 months was executed in 8 weeks — with zero disruption. Their Virtual
+                                CFO is worth every rupee.</p>
+                        </div>
+                        <div class="rh-person">
+                            <div class="rh-avatar">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80&auto=format&fit=crop&face"
+                                    alt="Michael Jensen">
+                            </div>
+                            <div>
+                                <div class="rh-name">Michael Jensen</div>
+                                <div class="rh-role">CFO · Apex SaaS Inc.</div>
+                            </div>
+                            <div class="rh-country">🇺🇸</div>
+                        </div>
+                    </div>
+                    <div class="reviews-right">
+                        <div class="review-card">
+                            <div class="rv-stars"><span>★★★★★</span></div>
+                            <p class="rv-text">As a CPA firm in Canada, we needed a reliable Indian delivery partner.
+                                LedgerOne operates like an extension of our own team — impeccable standards, always on
+                                time, every time.</p>
+                            <div class="rv-person">
+                                <div class="rv-avatar">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80&auto=format&fit=crop&face"
+                                        alt="Sarah Robertson">
+                                </div>
+                                <div>
+                                    <div class="rv-name">Sarah Robertson</div>
+                                    <div class="rv-role">Partner · Robertson & Co. CPA</div>
+                                </div>
+                                <div class="rv-country">🇨🇦</div>
+                            </div>
+                        </div>
+                        <div class="review-card">
+                            <div class="rv-stars"><span>★★★★★</span></div>
+                            <p class="rv-text">GST and income tax filings always on time — never a single penalty in
+                                three years. Kavita's team genuinely understands the pressures of a fast-scaling startup
+                                ecosystem.</p>
+                            <div class="rv-person">
+                                <div class="rv-avatar">RK</div>
+                                <div>
+                                    <div class="rv-name">Rohan Kapoor</div>
+                                    <div class="rv-role">CEO · Fintech Ventures Pvt. Ltd.</div>
+                                </div>
+                                <div class="rv-country">🇮🇳</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-row">
+                    <div class="review-card-sm fade-up">
+                        <div class="rcs-top">
+                            <div class="rcs-stars"><span>★★★★★</span></div>
+                            <div class="rcs-flag">🇬🇧</div>
+                        </div>
+                        <p class="rcs-text">Setting up our Indian subsidiary was daunting. LedgerOne handled the entire
+                            registration, compliance calendar, and first-year accounts. Absolutely seamless from start
+                            to finish.</p>
+                        <div class="rcs-person">
+                            <div class="rcs-avatar">LB</div>
+                            <div>
+                                <div class="rcs-name">Laura Bell</div>
+                                <div class="rcs-role">Operations Director · BrightLogic UK</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card-sm fade-up fade-up-delay-1">
+                        <div class="rcs-top">
+                            <div class="rcs-stars"><span>★★★★★</span></div>
+                            <div class="rcs-flag">🇸🇬</div>
+                        </div>
+                        <p class="rcs-text">The Virtual CFO service is extraordinary. Board-level financial insights at
+                            a fraction of the cost of a full-time hire. Reports are always clear, concise and delivered
+                            on schedule.</p>
+                        <div class="rcs-person">
+                            <div class="rcs-avatar">AT</div>
+                            <div>
+                                <div class="rcs-name">Aditya Thakur</div>
+                                <div class="rcs-role">Co-Founder · CloudStack Solutions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card-sm fade-up fade-up-delay-2">
+                        <div class="rcs-top">
+                            <div class="rcs-stars"><span>★★★★★</span></div>
+                            <div class="rcs-flag">🇮🇳</div>
+                        </div>
+                        <p class="rcs-text">CA Deepesh helped us restructure books before Series A due diligence.
+                            Investors were genuinely impressed with the quality of financials. LedgerOne is a true
+                            strategic partner.</p>
+                        <div class="rcs-person">
+                            <div class="rcs-avatar">PN</div>
+                            <div>
+                                <div class="rcs-name">Priya Nair</div>
+                                <div class="rcs-role">Founder · HealthTech Startup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GLOBAL CITY STRIP -->
+        <div class="globe-strip">
+            <div class="globe-cell">
+                <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=75&auto=format&fit=crop"
+                    alt="New York">
+                <div class="globe-overlay"></div>
+                <div class="globe-label">New York</div>
+            </div>
+            <div class="globe-cell">
+                <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=75&auto=format&fit=crop"
+                    alt="London">
+                <div class="globe-overlay"></div>
+                <div class="globe-label">London</div>
+            </div>
+            <div class="globe-cell">
+                <img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=75&auto=format&fit=crop"
+                    alt="Singapore">
+                <div class="globe-overlay"></div>
+                <div class="globe-label">Singapore</div>
+            </div>
+            <div class="globe-cell">
+                <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=75&auto=format&fit=crop"
+                    alt="New Delhi">
+                <div class="globe-overlay"></div>
+                <div class="globe-label">New Delhi</div>
+            </div>
+        </div>
+
+        <!-- PROCESS -->
+        <section id="process" class="section section-alt">
+            <div class="container">
+                <div class="section-head fade-up">
+                    <span class="section-label">05 / Workflow</span>
+                    <h2 class="section-title">The LedgerOne<br><em>Method.</em></h2>
+                </div>
+                <div class="process-grid">
+                    <div class="process-card fade-up">
+                        <span class="p-step">01.</span>
+                        <h4>Audit</h4>
+                        <p>Deep analysis of your current financial stack, compliance posture, and existing team
+                            workflows.</p>
+                    </div>
+                    <div class="process-card fade-up fade-up-delay-1">
+                        <span class="p-step">02.</span>
+                        <h4>Integrate</h4>
+                        <p>Seamless cloud deployment with zero disruption to daily operations or existing tools.</p>
+                    </div>
+                    <div class="process-card fade-up fade-up-delay-2">
+                        <span class="p-step">03.</span>
+                        <h4>Monitor</h4>
+                        <p>24/7 oversight, compliance calendar management, and real-time MIS reporting for full clarity.
+                        </p>
+                    </div>
+                    <div class="process-card fade-up fade-up-delay-3">
+                        <span class="p-step">04.</span>
+                        <h4>Scale</h4>
+                        <p>Continuous strategic advisory and expansion support to fuel your next global growth stage.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEADERSHIP -->
+        <section id="directors" class="section">
+            <div class="container">
+                <div class="section-head fade-up">
+                    <span class="section-label">06 / Leadership</span>
+                    <h2 class="section-title">Expert <em>guided.</em></h2>
+                </div>
+                <div class="leader-list">
+                    <div class="leader-row fade-up">
+                        <div>
+                            <div class="leader-name">Kavita Kingrani</div>
+                            <div class="leader-role">Founder · Virtual CFO & Compliance</div>
+                        </div>
+                        <div class="leader-bio">Strategic financial leadership and regulatory excellence. Primary
+                            architect of our compliance frameworks across Indian and international jurisdictions.</div>
+                        <div class="leader-arrow"><i data-lucide="arrow-up-right" size="20"></i></div>
+                    </div>
+                    <div class="leader-row fade-up">
+                        <div>
+                            <div class="leader-name">CA Deepesh Kingrani</div>
+                            <div class="leader-role">Head of Delivery · International Accounting</div>
+                        </div>
+                        <div class="leader-bio">Chartered Accountant leading global offshore accounting delivery. Expert
+                            in US GAAP, IFRS, and Indian Accounting Standards.</div>
+                        <div class="leader-arrow"><i data-lucide="arrow-up-right" size="20"></i></div>
+                    </div>
+                    <div class="leader-row fade-up">
+                        <div>
+                            <div class="leader-name">Ramesh Chand Kingrani</div>
+                            <div class="leader-role">Founder · Business Strategy Advisor</div>
+                        </div>
+                        <div class="leader-bio">Decades of expertise in business architecture, corporate structuring,
+                            and cross-border advisory for high-growth enterprises.</div>
+                        <div class="leader-arrow"><i data-lucide="arrow-up-right" size="20"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section id="contact" class="cta-section">
+            <div class="container">
+                <h2>Ready to <em>optimize</em><br>your financials?</h2>
+                <p>Join enterprises from 15+ countries that trust LedgerOne as their financial backbone.</p>
+                <div class="cta-actions">
+                    <a href="mailto:info@ledgeronellp.com" class="btn-primary">Book a Free Consultation</a>
+                    <a href="https://www.ledgeronellp.com/" class="btn-cta-outline" target="_blank">Visit Our
+                        Website</a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer style="padding: 60px 0; border-top: 1px solid var(--border);">
-        <div class="container"
-            style="display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
-            <p>© 2026 LedgerOne LLP | New Delhi</p>
-            <div style="display: flex; gap: 20px;">
-                <a href="https://www.ledgeronellp.com/" style="color: inherit; text-decoration: none;">Website</a>
-                <a href="#" style="color: inherit; text-decoration: none;">Privacy</a>
-                <a href="#" style="color: inherit; text-decoration: none;">Terms</a>
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon"><i data-lucide="layers" size="14" style="color:white;"></i></div>
+                        LedgerOne <span style="font-weight:300;opacity:.38;margin-left:2px;">LLP</span>
+                    </a>
+                    <p>Premium virtual accounting, GST, compliance, and CFO services for Indian and global enterprises.
+                        Based in New Delhi, serving the world.</p>
+                    <div class="footer-social" style="margin-top:24px;">
+                        <a href="#" class="social-btn"><i data-lucide="linkedin" size="16"></i></a>
+                        <a href="#" class="social-btn"><i data-lucide="twitter" size="16"></i></a>
+                        <a href="#" class="social-btn"><i data-lucide="mail" size="16"></i></a>
+                        <a href="#" class="social-btn"><i data-lucide="instagram" size="16"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h5>Services</h5>
+                    <a href="#services">Global Accounting</a>
+                    <a href="#services">Company Setup & Compliance</a>
+                    <a href="#services">Indian Tax & GST</a>
+                    <a href="#services">Virtual CFO</a>
+                    <a href="#services">MIS Reporting</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Company</h5>
+                    <a href="#about">About LedgerOne</a>
+                    <a href="#directors">Leadership Team</a>
+                    <a href="#process">Our Method</a>
+                    <a href="#contact">Contact Us</a>
+                    <a href="https://www.ledgeronellp.com/" target="_blank">Official Website</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Get in Touch</h5>
+                    <a href="mailto:info@ledgeronellp.com">info@ledgeronellp.com</a>
+                    <a href="tel:+911234567890">+91 12345 67890</a>
+                    <a href="#">New Delhi, India — 110001</a>
+                    <a href="#">Mon–Sat · 9AM–7PM IST</a>
+                    <a href="#contact"
+                        style="margin-top:12px;display:inline-block;background:var(--accent);color:white;padding:10px 16px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;">Book
+                        Consultation</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 LedgerOne LLP · New Delhi, India · All rights reserved</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Disclaimer</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -618,49 +2394,37 @@
     <script>
         lucide.createIcons();
 
-        // Subtle Scroll Animations
+        // Navbar
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+        });
+        document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', () => {
+            hamburger.classList.remove('open'); mobileMenu.classList.remove('open');
+        }));
+
+        // Fade-up observer
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+        // GSAP hero
         gsap.registerPlugin(ScrollTrigger);
-
-        gsap.from(".reveal-text", {
-            y: 100,
-            opacity: 0,
-            duration: 1.2,
-            ease: "power4.out",
-            delay: 0.2
-        });
-
-        gsap.from(".service-card", {
-            scrollTrigger: {
-                trigger: ".services-grid",
-                start: "top 80%"
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.2
-        });
-
-        gsap.from(".process-card", {
-            scrollTrigger: {
-                trigger: ".process-grid",
-                start: "top 80%"
-            },
-            x: -30,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1
-        });
-
-        gsap.from(".industry-item", {
-            scrollTrigger: {
-                trigger: "#industry-list",
-                start: "top 85%"
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.6,
-            stagger: 0.15
-        });
+        gsap.from(".reveal-text", { y: 80, opacity: 0, duration: 1.4, ease: "power4.out", delay: 0.3 });
+        gsap.from(".hero-label", { y: 20, opacity: 0, duration: 0.8, delay: 0.1 });
+        gsap.from(".hero-sub", { y: 30, opacity: 0, duration: 0.8, delay: 0.65 });
+        gsap.from(".hero-actions", { y: 30, opacity: 0, duration: 0.8, delay: 0.85 });
+        gsap.from(".stat-item", { y: 20, opacity: 0, duration: 0.6, stagger: 0.12, delay: 1.05 });
+        gsap.from(".collage-main", { x: 60, opacity: 0, duration: 1.2, ease: "power3.out", delay: 0.5 });
+        gsap.from(".collage-secondary", { x: -40, opacity: 0, duration: 1.0, ease: "power3.out", delay: 0.9 });
+        gsap.from(".collage-badge", { scale: 0.8, opacity: 0, duration: 0.7, ease: "back.out(1.5)", delay: 1.2 });
     </script>
 </body>
 
