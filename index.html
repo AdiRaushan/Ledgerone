@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LedgerOne LLP | Premium Financial Infrastructure</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e3a6c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 3v18h18'/><path d='m19 9-5 5-4-4-3 3'/></svg>">
     <meta name="description"
         content="LedgerOne LLP offers virtual accounting, GST, income tax, and compliance services for both Indian and international clients.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,8 +20,8 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#004d61',
-                        accent: '#005eff',
+                        primary: '#0e3a6c', // Professional Logo Navy
+                        accent: '#c5a059',  // Elegant Logo Gold
                         surface: '#f7f9fc',
                         surface2: '#eef2f7',
                         text: '#0a0f14',
@@ -41,8 +43,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
-            --primary: #004d61;
-            --accent: #005eff;
+            --primary: #0e3a6c;
+            --accent: #c5a059;
             --bg: #ffffff;
             --surface: #f7f9fc;
             --surface2: #eef2f7;
@@ -85,75 +87,53 @@
 
         /* ── NAVBAR ── */
         #navbar {
-            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000;
-            transition: background .4s var(--ease), box-shadow .4s, border-color .4s;
+            background: transparent;
             border-bottom: 1px solid transparent;
+            transition: all 0.4s var(--ease);
         }
 
         #navbar.scrolled {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: saturate(180%) blur(16px);
-            -webkit-backdrop-filter: saturate(180%) blur(16px);
-            border-bottom-color: var(--border);
-            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .nav-inner {
-            max-width: 1380px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 84px;
+            height: 100px;
+            transition: all 0.5s var(--ease);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
+        #navbar.scrolled .nav-inner {
+            height: 80px;
         }
 
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+        .nav-link {
+            transition: all 0.3s;
+        }
+
+        #navbar.scrolled .nav-link {
+            color: var(--primary) !important;
+        }
+
+        .logo img {
+            height: 6rem;
+            width: auto;
+            transition: all 0.4s var(--ease);
+            object-fit: contain;
+        }
+
+        #navbar.scrolled .logo img {
+            height: 5.2rem;
         }
 
         .nav-center {
             display: flex;
             align-items: center;
             gap: 2px;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.81rem;
-            font-weight: 600;
-            padding: 8px 13px;
-            transition: color .25s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .nav-link:hover {
-            color: var(--text);
         }
 
         /* Mega menu */
@@ -397,7 +377,7 @@
             border-bottom: none;
             position: relative;
         }
-        
+
         .mobile-menu a.sub::before {
             content: '';
             position: absolute;
@@ -423,76 +403,181 @@
 
         /* ── HERO ── */
         .hero {
+            position: relative;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            padding-top: 100px;
+        }
+
+        .hero-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
             align-items: center;
-            padding: 110px 0 80px;
-            position: relative;
-            overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 55% 65% at 25% 55%, rgba(0, 94, 255, .04), transparent 70%);
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 50px;
+            }
+
+            .hero-form-container {
+                max-width: 500px;
+                margin: 0 auto;
+            }
         }
 
-        .hero-left {
-            position: relative;
-            z-index: 1;
-            padding-right: 48px;
-        }
-
-        .hero-right {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-label {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(0, 94, 255, 0.05);
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: .65rem;
-            font-weight: 800;
-            letter-spacing: .15em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 24px;
-            border: 1px solid rgba(0, 94, 255, 0.1);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.4rem, 4.8vw, 4.4rem);
+        .hero-title {
+            font-size: clamp(2.8rem, 6vw, 5.2rem);
             line-height: 1.1;
             font-weight: 800;
-            letter-spacing: -.03em;
-            margin-bottom: 26px;
+            margin-bottom: 2rem;
+            letter-spacing: -0.04em;
         }
 
-        .hero h1 em {
+        .hero-title em {
             font-family: 'Instrument Serif', serif;
             font-style: italic;
             font-weight: 400;
-            color: var(--primary);
+            color: #c5a059;
+            margin-right: 0.1em;
         }
 
-        .hero-sub {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            max-width: 520px;
-            line-height: 1.8;
-            margin-bottom: 38px;
+        .hero-desc {
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            line-height: 1.6;
         }
 
-        .hero-actions {
-            display: flex;
-            gap: 13px;
-            flex-wrap: wrap;
-            margin-bottom: 52px;
+        @media (max-width: 1024px) {
+            .hero-desc {
+                margin: 0 auto 3rem;
+            }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 100px;
+            color: #c5a059;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Hero Form Styles */
+        .hero-form-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        .hero-form-container h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-form-container p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 14px 18px;
+            color: white;
+            font-size: 0.88rem;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #c5a059;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            background-size: 14px;
+        }
+
+        .form-select option {
+            background: #0e3a6c;
+            color: white;
+        }
+
+        .hero-form-btn {
+            width: 100%;
+            background: #c5a059;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .hero-form-btn:hover {
+            background: #b38f4d;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3);
+        }
+
+        @keyframes scrollMove {
+            0% {
+                top: 0;
+                height: 0;
+            }
+
+            50% {
+                top: 0;
+                height: 100%;
+            }
+
+            100% {
+                top: 100%;
+                height: 0;
+            }
         }
 
         .btn-primary {
@@ -1004,6 +1089,111 @@
             line-height: 1.7;
         }
 
+        /* ── SERVE SECTION ── */
+        .serve-section {
+            background: var(--primary);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .serve-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+
+        @media (max-width: 1024px) {
+            .serve-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+        }
+
+        .serve-col-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .serve-col-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: #c5a059;
+        }
+
+        .serve-items-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 40px;
+        }
+
+        .serve-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s;
+        }
+
+        .serve-item:hover {
+            transform: translateX(8px);
+        }
+
+        .serve-icon-box {
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .serve-flag {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .serve-flag img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .serve-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .serve-footer {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            padding-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* ── MARQUEE ── */
         .marquee-section {
             background: var(--primary);
@@ -1013,9 +1203,9 @@
 
         .marquee-track {
             display: flex;
-            gap: 44px;
+            gap: 60px;
             white-space: nowrap;
-            animation: marquee 28s linear infinite;
+            animation: marquee 40s linear infinite;
         }
 
         .marquee-track:hover {
@@ -1143,7 +1333,6 @@
 
         .reviews-right {
             display: grid;
-            grid-template-rows: 1fr 1fr;
             background: var(--border);
             gap: 1px;
         }
@@ -1154,7 +1343,7 @@
             transition: background .3s;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            height: 100%;
         }
 
         .review-card:hover {
@@ -1250,7 +1439,7 @@
             transition: background .3s;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            height: 100%;
         }
 
         .review-card-sm:hover {
@@ -1701,6 +1890,19 @@
 
         /* ── RESPONSIVE ── */
         @media(max-width:768px) {
+            #navbar {
+                width: 92%;
+                top: 10px;
+            }
+
+            .nav-inner {
+                height: 70px;
+            }
+
+            .logo img {
+                height: 4.8rem;
+                margin-top: 0;
+            }
 
             .nav-center,
             .cta-nav {
@@ -1727,130 +1929,110 @@
 <body>
 
     <!-- NAVBAR -->
-    <header id="navbar" class="bg-transparent">
-        <div class="nav-inner container px-6 md:px-10 h-20 md:h-[84px] flex items-center justify-between">
-            <a href="#" class="logo">
-                <div class="logo-icon"><i data-lucide="layers" size="15" style="color:white;"></i></div>
-                LedgerOne <span style="font-weight:300;opacity:.38;margin-left:2px;">LLP</span>
+    <header id="navbar" class="fixed top-0 left-0 w-full z-[1000]">
+        <div class="nav-inner max-w-[1380px] mx-auto px-6 md:px-10 flex items-center justify-between">
+            <a href="index.html" class="logo flex items-center gap-2.5 no-underline">
+                <img src="logo.png" alt="LedgerOne LLP">
             </a>
 
-            <nav class="nav-center">
-                <a href="#home" class="nav-link">Home</a>
+            <nav class="hidden md:flex items-center gap-2">
+                <a href="#home"
+                    class="nav-link text-white/90 hover:text-white text-[0.82rem] font-bold px-4 py-2">Home</a>
 
-                <!-- Dropdown 1 -->
-                <div class="dropdown">
-                    <a href="#services" class="nav-link">Global Accounting <i data-lucide="chevron-down"
-                            size="12"></i></a>
-                    <div class="mega-menu">
-                        <div class="mega-inner">
-                            <div class="mega-col">
-                                <div class="mega-col-title">Bookkeeping</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Daily Bookkeeping</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Bank
-                                    Reconciliation</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>General Ledger
-                                    Mgmt</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Payroll Processing</a>
+                <div class="dropdown group relative">
+                    <a href="#services"
+                        class="nav-link text-white/90 group-hover:text-white text-[0.82rem] font-bold px-4 py-2 flex items-center gap-1">
+                        Services <i data-lucide="chevron-down" size="12"></i>
+                    </a>
+                    <div
+                        class="mega-menu absolute top-[calc(100%+6px)] left-1/2 -translate-x-1/2 -translate-y-2 bg-white border border-slate-100 shadow-premium min-w-[850px] opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-[var(--ease)] rounded-sm">
+                        <div class="mega-inner grid grid-cols-3 p-2">
+                            <div class="mega-col p-6 border-r border-slate-100">
+                                <div
+                                    class="mega-col-title text-[0.6rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-3 pb-2 border-b border-slate-100">
+                                    Global Accounting</div>
+                                <div class="flex flex-col gap-1">
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Bookkeeping
+                                        & Reconcile</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Virtual
+                                        CFO Services</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">AP
+                                        / AR Management</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">MIS
+                                        & Reporting</a>
+                                </div>
                             </div>
-                            <div class="mega-col">
-                                <div class="mega-col-title">Reporting</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>MIS Reports</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>P&L Statements</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Balance Sheet Prep</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Cash Flow Analysis</a>
+                            <div class="mega-col p-6 border-r border-slate-100">
+                                <div
+                                    class="mega-col-title text-[0.6rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-3 pb-2 border-b border-slate-100">
+                                    Company Setup</div>
+                                <div class="flex flex-col gap-1">
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Private
+                                        Limited / LLP</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">ROC
+                                        & Secretarial</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">FDI
+                                        & FEMA Advisory</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Startup
+                                        Registration</a>
+                                </div>
                             </div>
-                            <div class="mega-col">
-                                <div class="mega-col-title">CFO Services</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Virtual CFO</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>AP / AR Management</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Budgeting &
-                                    Forecast</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Investor Reporting</a>
+                            <div class="mega-col p-6">
+                                <div
+                                    class="mega-col-title text-[0.6rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-3 pb-2 border-b border-slate-100">
+                                    Indian Tax</div>
+                                <div class="flex flex-col gap-1">
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">GST
+                                        Returns & Audit</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">ITR
+                                        Filing & Planning</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">TDS
+                                        Compliance</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Notice
+                                        & Assessment</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Dropdown 2 -->
-                <div class="dropdown">
-                    <a href="#services" class="nav-link">Company Setup <i data-lucide="chevron-down" size="12"></i></a>
-                    <div class="mega-menu">
-                        <div class="mega-inner">
-                            <div class="mega-col">
-                                <div class="mega-col-title">Registration</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Private Limited
-                                    Co.</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>LLP Formation</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>OPC Registration</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Partnership Firm</a>
-                            </div>
-                            <div class="mega-col">
-                                <div class="mega-col-title">Compliance</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>ROC Filings</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Secretarial
-                                    Services</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Annual Compliance</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Director KYC</a>
-                            </div>
-                            <div class="mega-col">
-                                <div class="mega-col-title">Advisory</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Corporate
-                                    Structuring</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>FDI & FEMA</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Startup India</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Shareholder
-                                    Agreements</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dropdown 3 -->
-                <div class="dropdown">
-                    <a href="#services" class="nav-link">Indian Tax <i data-lucide="chevron-down" size="12"></i></a>
-                    <div class="mega-menu">
-                        <div class="mega-inner">
-                            <div class="mega-col">
-                                <div class="mega-col-title">GST</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>GST Registration</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Monthly / Qtrly
-                                    Returns</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>GSTR-9 Annual</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>GST Audit &
-                                    Notices</a>
-                            </div>
-                            <div class="mega-col">
-                                <div class="mega-col-title">Income Tax</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>ITR Filing (All
-                                    types)</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Tax Planning</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>TDS / TCS
-                                    Compliance</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Advance Tax</a>
-                            </div>
-                            <div class="mega-col">
-                                <div class="mega-col-title">Business Compliance</div>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Tax Audit</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Transfer Pricing</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>Notice &
-                                    Assessment</a>
-                                <a href="#services" class="mega-link"><span class="ml-dot"></span>NRI Taxation</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-link">Contact</a>
+                <a href="about.html"
+                    class="nav-link text-white/90 hover:text-white text-[0.82rem] font-bold px-4 py-2">About</a>
+                <a href="blog.html"
+                    class="nav-link text-white/90 hover:text-white text-[0.82rem] font-bold px-4 py-2">Blogs</a>
+                <a href="#contact"
+                    class="nav-link text-white/90 hover:text-white text-[0.82rem] font-bold px-4 py-2">Contact</a>
             </nav>
 
-            <a href="#contact" class="cta-nav">Book Consultation</a>
-            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            <a href="#contact"
+                class="cta-nav bg-accent text-white px-6 py-3 text-[0.75rem] font-extrabold tracking-widest uppercase transition-all duration-300 hover:bg-white hover:text-accent whitespace-nowrap ml-5 shadow-lg">Book
+                Consultation</a>
+
+            <div class="hamburger md:hidden flex flex-col justify-center items-end gap-1 cursor-pointer w-10 h-10 rounded-full transition-colors hover:bg-white/10 relative"
+                id="hamburger">
+                <span class="block h-0.5 bg-white w-5 transition-all duration-300"></span>
+                <span class="block h-0.5 bg-white w-4 transition-all duration-300"></span>
+                <span class="block h-0.5 bg-white w-[18px] transition-all duration-300"></span>
+            </div>
         </div>
     </header>
 
-    <!-- Mobile menu -->
     <div class="mobile-menu" id="mobile-menu">
+        <div class="px-6 py-8 border-b border-slate-100 mb-6">
+            <img src="logo.png" alt="LedgerOne" class="h-16 w-auto">
+        </div>
         <a href="#home">Home</a>
         <div class="mob-sec">Global Accounting</div>
         <a href="#services" class="sub">Bookkeeping & Reconciliation</a>
@@ -1867,68 +2049,74 @@
         <a href="#services" class="sub">ITR Filing (All Types)</a>
         <a href="#services" class="sub">TDS / TCS Compliance</a>
         <a href="#services" class="sub">Tax Audit</a>
-        <a href="#about">About</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blogs</a>
         <a href="#contact">Contact</a>
         <a href="#contact" class="mobile-cta">Book Consultation</a>
     </div>
 
     <main>
 
-        <section class="hero min-h-screen flex items-center pt-32 lg:pt-32 overflow-hidden" id="home">
-            <div class="container">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    <div class="hero-left">
-                        <span class="hero-label">High-Fidelity Financial Infrastructure</span>
-                        <h1 class="reveal-text">Global<br><em> Precision</em><br> Accounting</h1>
-                        <p class="hero-sub">Virtual accounting, GST, global compliance & CFO advisory for cross-border
-                            businesses.</p>
-
-                        <!-- Hero Review Badge -->
-                        <div class="hero-review-badge flex items-center gap-3 mb-10 fade-up">
-                            <div class="flex text-amber-500 text-xs">★★★★★</div>
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Rated 4.9/5 by
-                                500+ Happy Clients</span>
-                        </div>
-
-                        <div class="hero-actions">
-                            <a href="#contact" class="btn-primary">Book Free Consultation</a>
-                            <a href="tel:+911234567890" class="btn-outline"
-                                style="display:flex;align-items:center;gap:8px;"><i data-lucide="phone" size="14"></i>
-                                Call Us Now</a>
-                        </div>
-                        <div class="hero-stats grid grid-cols-3 gap-6 md:gap-10 mt-12 pt-8 border-t border-slate-100">
-                            <div class="stat-item">
-                                <h3 class="text-2xl md:text-3xl font-extrabold tracking-tighter">100%</h3>
-                                <p class="text-[10px] uppercase tracking-widest font-bold text-slate-500 mt-1">
-                                    Compliance</p>
+        <section class="hero min-h-screen relative overflow-hidden bg-cover bg-center bg-fixed" id="home"
+            style="background-image: linear-gradient(rgba(0, 15, 30, 0.75), rgba(0, 10, 20, 0.55)), url('https://images.unsplash.com/photo-1569098644584-210bcd375b59?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+            <div class="container relative z-10">
+                <div class="hero-grid">
+                    <!-- Left: Messaging -->
+                    <div class="hero-text-side fade-up">
+                        <span class="hero-badge">Premium Financial Infrastructure</span>
+                        <h1 class="hero-title">
+                            Your Trusted <span
+                                class="inline-block w-[60px] h-[3px] bg-[#c5a059] align-middle mx-3 rounded-full opacity-60"></span>
+                            <br>
+                            <em>Consulting</em> Partner
+                        </h1>
+                        <p class="hero-desc">
+                            Institutional-grade virtual accounting, GST, global compliance and strategic CFO advisory
+                            for cross-border innovators.
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="flex -space-x-3">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop"
+                                    class="w-10 h-10 rounded-full border-2 border-[#0e3a6c] object-cover">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop"
+                                    class="w-10 h-10 rounded-full border-2 border-[#0e3a6c] object-cover">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
+                                    class="w-10 h-10 rounded-full border-2 border-[#0e3a6c] object-cover">
                             </div>
-                            <div class="stat-item">
-                                <h3 class="text-2xl md:text-3xl font-extrabold tracking-tighter">24/7</h3>
-                                <p class="text-[10px] uppercase tracking-widest font-bold text-slate-500 mt-1">CFO
-                                    Advisory</p>
-                            </div>
-                            <div class="stat-item">
-                                <h3 class="text-2xl md:text-3xl font-extrabold tracking-tighter">15+</h3>
-                                <p class="text-[10px] uppercase tracking-widest font-bold text-slate-500 mt-1">Countries
-                                </p>
+                            <div class="text-[0.75rem] font-bold text-white/70">
+                                Trusted by <span class="text-accent">500+</span> Global Entities
                             </div>
                         </div>
                     </div>
-                    <div class="hero-right relative">
-                        <div class="hero-collage lg:h-[560px] h-[400px] w-full">
-                            <img class="collage-main rounded-sm shadow-2xl"
-                                src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="Finance professionals">
-                            <img class="collage-secondary rounded-sm shadow-xl border-4 border-white"
-                                src="https://images.unsplash.com/photo-1725258080098-727051947997?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="Financial data">
-                            <div class="collage-badge p-5 md:p-6 bg-primary text-white shadow-xl">
-                                <strong
-                                    class="text-2xl md:text-3xl font-black block leading-none tracking-tighter">₹500Cr+</strong>
-                                <span
-                                    class="text-[9px] font-bold uppercase tracking-widest opacity-80 mt-1 block">Revenue
-                                    Managed</span>
-                            </div>
+
+                    <!-- Right: Lead Gen Form -->
+                    <div class="hero-form-side fade-up" style="animation-delay: 0.2s;">
+                        <div class="hero-form-container">
+                            <h3>Expert Advisory</h3>
+                            <p>Book your free strategic consultation today.</p>
+                            <form action="#" method="POST" class="hero-form">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Full Name" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" placeholder="Work Email" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-input form-select" required>
+                                        <option value="" disabled selected>Select Service</option>
+                                        <option value="global-accounting">Global Accounting</option>
+                                        <option value="company-setup">Company Setup / Registration</option>
+                                        <option value="indian-tax">Indian Tax Compliance</option>
+                                        <option value="virtual-cfo">Virtual CFO Services</option>
+                                        <option value="audit-assurance">Audit & Assurance</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="Tell us about your requirements..."
+                                        class="form-input h-24 resize-none" required></textarea>
+                                </div>
+                                <button type="submit" class="hero-form-btn">Get Started Now</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -1936,58 +2124,164 @@
         </section>
 
         <!-- SERVICES -->
-        <section id="services" class="section section-alt">
+        <section id="services" class="section section-alt pt-32 pb-24">
             <div class="container">
-                <div class="section-head fade-up">
-                    <span class="section-label">01 / Capabilities</span>
-                    <h2 class="section-title">Surgical precision.<br><em>Minimal overhead.</em></h2>
-                    <p class="section-sub">Three pillars of world-class financial infrastructure — delivered with
-                        institutional quality, at a fraction of the cost.</p>
+                <div class="max-w-[700px] mb-20 fade-up">
+                    <span
+                        class="inline-block text-[0.65rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-4">01
+                        / Key Capabilities</span>
+                    <h2
+                        class="text-[clamp(2.2rem,5vw,3.5rem)] leading-tight font-extrabold text-primary tracking-tighter mb-6">
+                        Surgical precision.<br><em class="font-serif italic font-normal text-accent/80">Institutional
+                            Quality.</em></h2>
+                    <p class="text-slate-500 text-lg leading-relaxed">Three pillars of world-class financial
+                        infrastructure — delivered with precision, transparency, and a fraction of the cost of
+                        traditional firms.</p>
                 </div>
-                <div
-                    class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-200 border border-slate-200">
-                    <div class="svc-card fade-up">
-                        <div class="svc-icon"><i data-lucide="globe-2" size="24"></i></div>
-                        <h3>Global Accounting</h3>
-                        <p>Offshore accounting delivery for international CPA firms and enterprises, powered by India's
-                            best CA hub.</p>
-                        <ul class="svc-bullets">
-                            <li>Bookkeeping & Bank Reconciliation</li>
-                            <li>Accounts Payable / Receivable</li>
-                            <li>MIS & Management Reporting</li>
-                            <li>Virtual CFO Services</li>
-                            <li>Financial Statement Preparation</li>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Global Accounting Card -->
+                    <div
+                        class="svc-card-new group bg-white p-10 border border-slate-100 shadow-sm hover:shadow-premium transition-all duration-500 relative overflow-hidden fade-up">
+                        <div
+                            class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -mr-10 -mt-10 group-hover:bg-accent/5 transition-colors">
+                        </div>
+                        <div
+                            class="svc-icon-new w-16 h-16 bg-primary/5 flex items-center justify-center rounded-sm mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                            <i data-lucide="globe-2" size="30"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-4 tracking-tight">Global Accounting</h3>
+                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">End-to-end financial
+                            infrastructure for global firms, including bookkeeping, reconciliation, and automated
+                            reporting.</p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Multi-currency Bookkeeping
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Virtual CFO Advisory
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Payroll & AP/AR Management
+                            </li>
                         </ul>
-                        <a href="#contact" class="svc-cta">Enquire Now <i data-lucide="arrow-right" size="14"></i></a>
+                        <a href="#contact"
+                            class="inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-widest text-accent group-hover:gap-4 transition-all">Explore
+                            Service <i data-lucide="arrow-right" size="14"></i></a>
                     </div>
-                    <div class="svc-card fade-up fade-up-delay-1">
-                        <div class="svc-icon"><i data-lucide="building-2" size="24"></i></div>
-                        <h3>Company Setup & Compliance</h3>
-                        <p>End-to-end business registration and structural advisory for Indian entities and cross-border
-                            expansion.</p>
-                        <ul class="svc-bullets">
-                            <li>Private Limited / LLP Registration</li>
-                            <li>Corporate Structuring & FDI</li>
-                            <li>ROC & Secretarial Compliance</li>
-                            <li>Startup India Registration</li>
-                            <li>Shareholder & JV Agreements</li>
+
+                    <!-- Company Setup Card -->
+                    <div class="svc-card-new group bg-white p-10 border border-slate-100 shadow-sm hover:shadow-premium transition-all duration-500 relative overflow-hidden fade-up"
+                        style="animation-delay: 0.1s;">
+                        <div
+                            class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -mr-10 -mt-10 group-hover:bg-accent/5 transition-colors">
+                        </div>
+                        <div
+                            class="svc-icon-new w-16 h-16 bg-primary/5 flex items-center justify-center rounded-sm mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                            <i data-lucide="building-2" size="30"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-4 tracking-tight">Company Setup</h3>
+                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">Strategic business formation and
+                            structural compliance for startups and international entities entering the Indian market.
+                        </p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Private Limited & LLP Setup
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> FDI & FEMA Compliance
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Startup India Advisory
+                            </li>
                         </ul>
-                        <a href="#contact" class="svc-cta">Enquire Now <i data-lucide="arrow-right" size="14"></i></a>
+                        <a href="#contact"
+                            class="inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-widest text-accent group-hover:gap-4 transition-all">Explore
+                            Service <i data-lucide="arrow-right" size="14"></i></a>
                     </div>
-                    <div class="svc-card fade-up fade-up-delay-2">
-                        <div class="svc-icon"><i data-lucide="shield-check" size="24"></i></div>
-                        <h3>Indian Tax & Compliance</h3>
-                        <p>Flawless GST, Income Tax and regulatory management ensuring zero-penalty, audit-ready
-                            operations.</p>
-                        <ul class="svc-bullets">
-                            <li>GST Registration & Monthly Returns</li>
-                            <li>Income Tax Filing (All Types)</li>
-                            <li>TDS / TCS Compliance</li>
-                            <li>Tax Audit & Transfer Pricing</li>
-                            <li>Notice Handling & Assessment</li>
+
+                    <!-- Indian Tax Card -->
+                    <div class="svc-card-new group bg-white p-10 border border-slate-100 shadow-sm hover:shadow-premium transition-all duration-500 relative overflow-hidden fade-up"
+                        style="animation-delay: 0.2s;">
+                        <div
+                            class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -mr-10 -mt-10 group-hover:bg-accent/5 transition-colors">
+                        </div>
+                        <div
+                            class="svc-icon-new w-16 h-16 bg-primary/5 flex items-center justify-center rounded-sm mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                            <i data-lucide="landmark" size="30"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-4 tracking-tight">Indian Tax & Audit</h3>
+                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">Precision-led tax strategies and
+                            compliance management, ensuring your business stays audit-ready and tax-efficient.</p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> GST & Income Tax Management
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Tax Audit & Representations
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> NRI & Cross-border Taxation
+                            </li>
                         </ul>
-                        <a href="#contact" class="svc-cta">Enquire Now <i data-lucide="arrow-right" size="14"></i></a>
+                        <a href="#contact"
+                            class="inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-widest text-accent group-hover:gap-4 transition-all">Explore
+                            Service <i data-lucide="arrow-right" size="14"></i></a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEADERSHIP -->
+        <section id="directors" class="section bg-white">
+            <div class="container">
+                <div class="section-head fade-up text-center max-w-3xl mx-auto">
+                    <span class="section-label">02 / Leadership</span>
+                    <h2 class="section-title">Guided by <em>Excellence.</em></h2>
+                    <p class="text-slate-500 text-lg mt-4">Personally overseen delivery by our Head of Delivery to
+                        ensure institutional-grade financial management.</p>
+                </div>
+                <div class="leader-list border-t border-slate-100 mt-12">
+                    <!-- CA Deepesh Kingrani Only -->
+                    <div
+                        class="leader-row group fade-up grid grid-cols-1 md:grid-cols-[1.5fr_3fr_1fr] items-start py-16 border-b border-slate-100 hover:bg-slate-50/50 transition-colors px-4">
+                        <div class="relative">
+                            <div class="aspect-square bg-slate-100 overflow-hidden mb-6">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80&auto=format&fit=crop"
+                                    alt="CA Deepesh Kingrani"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                            </div>
+                            <div class="leader-name text-2xl font-extrabold text-primary mb-1">CA Deepesh Kingrani</div>
+                            <div class="leader-role text-accent font-bold text-xs tracking-wide uppercase">Head of
+                                Delivery — Int. Accounting & CFO Advisory</div>
+                            <div
+                                class="text-[0.6rem] font-extrabold text-primary/60 uppercase tracking-[0.2em] mt-3 bg-white border border-slate-100 px-3 py-1.5 inline-block rounded-full">
+                                Chartered Accountant | FCA | 10+ Years</div>
+                        </div>
+                        <div class="leader-bio text-slate-600 leading-relaxed text-lg lg:pl-12">
+                            <p class="italic text-primary font-bold mb-6 text-2xl border-l-4 border-accent pl-6 py-2">
+                                "Precision in numbers. Clarity in strategy. Trust in every engagement."
+                            </p>
+                            <p class="mb-6">Deepesh Kingrani is a Fellow Chartered Accountant with over a decade of
+                                hands-on experience in international accounting, GST, income tax litigation, audit, and
+                                virtual CFO advisory.</p>
+                            <p class="mb-6">Having worked with businesses across India, the US, the UK, and the UAE,
+                                Deepesh brings a rare combination of deep Indian regulatory expertise and global
+                                financial delivery standards — making him the preferred finance partner for overseas
+                                companies entering India and international CPA firms seeking reliable offshore
+                                accounting support.</p>
+                            <p class="font-medium text-primary">At LedgerOne LLP, Deepesh leads all client delivery —
+                                personally overseeing every engagement from onboarding to ongoing compliance — ensuring
+                                that each client receives institutional-grade financial management at a fraction of the
+                                cost of in-house hiring.</p>
+                        </div>
+                        <div
+                            class="leader-arrow self-center justify-self-end text-slate-100 group-hover:text-accent group-hover:translate-x-1 transition-all">
+                            <i data-lucide="arrow-right" size="48"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="about.html" class="btn-outline">Read Full Story</a>
                 </div>
             </div>
         </section>
@@ -2021,16 +2315,19 @@
                         <div class="about-img-badge"><strong>2018</strong><span>Founded</span></div>
                     </div>
                     <div class="about-text fade-up fade-up-delay-1">
-                        <span class="section-label">02 / About Us</span>
-                        <h2 class="section-title" style="margin-bottom:22px;">Built for the <em>modern</em> global
-                            economy.</h2>
-                        <p>LedgerOne LLP was founded on a single conviction: growing businesses deserve
-                            institutional-grade financial infrastructure — without institutional overhead.</p>
-                        <p>We operate as a distributed team of chartered accountants, compliance specialists, and
-                            financial strategists. Our clients span SaaS startups, global CPA firms, e-commerce
-                            operators, and fintech innovators from New Delhi to New York.</p>
-                        <p>Every engagement is guided by our founders who bring decades of combined expertise in Indian
-                            and international accounting standards including US GAAP, IFRS and Ind AS.</p>
+                        <span class="section-label">04 / About Us</span>
+                        <h2 class="section-title" style="margin-bottom:22px;">Precision in numbers. <em>Clarity</em> in
+                            strategy.</h2>
+                        <p>LedgerOne LLP is a premier financial infrastructure firm founded on a single conviction:
+                            growing businesses deserve institutional-grade financial management — without institutional
+                            overhead.</p>
+                        <p>LedgerOne LLP offers virtual accounting, GST, income tax, and compliance services for both
+                            Indian and international clients. We operate as a distributed team of chartered accountants,
+                            compliance specialists, and financial strategists serving cross-border innovators from New
+                            Delhi to New York.</p>
+                        <p>LedgerOne leads all client delivery — personally overseeing every engagement from onboarding
+                            to ongoing compliance — ensuring that each client receives institutional-grade financial
+                            management at a fraction of the cost of in-house hiring.</p>
                         <div
                             class="about-metrics grid grid-cols-2 gap-x-8 gap-y-10 mt-8 pt-8 border-t border-slate-200">
                             <div class="am-item">
@@ -2061,7 +2358,7 @@
         <section class="section section-alt">
             <div class="container">
                 <div class="section-head fade-up">
-                    <span class="section-label">03 / Advantage</span>
+                    <span class="section-label">05 / Advantage</span>
                     <h2 class="section-title">Why the world<br><em>chooses LedgerOne.</em></h2>
                 </div>
                 <div
@@ -2094,6 +2391,143 @@
             </div>
         </section>
 
+        <!-- SERVE SECTION -->
+        <section class="serve-section">
+            <div class="container">
+                <div class="serve-grid">
+                    <!-- Left: Industries -->
+                    <div class="fade-up">
+                        <h2 class="serve-col-title">Industries We Serve</h2>
+                        <div class="serve-items-grid">
+                            <div class="serve-item">
+                                <div class="serve-icon-box"><i data-lucide="truck" size="20"></i></div>
+                                <span class="serve-text">Automotive & Transportation</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-icon-box"><i data-lucide="coffee" size="20"></i></div>
+                                <span class="serve-text">Hospitality</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-icon-box"><i data-lucide="shopping-cart" size="20"></i></div>
+                                <span class="serve-text">Retail & Wholesale</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-icon-box"><i data-lucide="factory" size="20"></i></div>
+                                <span class="serve-text">Manufacturing</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-icon-box"><i data-lucide="shield-check" size="20"></i></div>
+                                <span class="serve-text">Insurance</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-icon-box"><i data-lucide="building" size="20"></i></div>
+                                <span class="serve-text">Banking & Finance</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-icon-box"><i data-lucide="stethoscope" size="20"></i></div>
+                                <span class="serve-text">Healthcare</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-icon-box"><i data-lucide="scale" size="20"></i></div>
+                                <span class="serve-text">Law</span>
+                            </div>
+                            <div class="serve-item">
+                                <span class="serve-text opacity-50 italic">And more...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Countries -->
+                    <div class="fade-up" style="animation-delay: 0.1s;">
+                        <h2 class="serve-col-title">Countries We Serve</h2>
+                        <div class="serve-items-grid grid-cols-2 md:grid-cols-3">
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/in.svg" alt="India"></div>
+                                <span class="serve-text">India</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/de.svg" alt="Germany"></div>
+                                <span class="serve-text">Germany</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/us.svg" alt="United States"></div>
+                                <span class="serve-text">United States</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/it.svg" alt="Italy"></div>
+                                <span class="serve-text">Italy</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/gb.svg" alt="United Kingdom">
+                                </div>
+                                <span class="serve-text">United Kingdom</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/ae.svg" alt="UAE"></div>
+                                <span class="serve-text">UAE</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/ch.svg" alt="Switzerland"></div>
+                                <span class="serve-text">Switzerland</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/jp.svg" alt="Japan"></div>
+                                <span class="serve-text">Japan</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/sg.svg" alt="Singapore"></div>
+                                <span class="serve-text">Singapore</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/ca.svg" alt="Canada"></div>
+                                <span class="serve-text">Canada</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/fr.svg" alt="France"></div>
+                                <span class="serve-text">France</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/au.svg" alt="Australia"></div>
+                                <span class="serve-text">Australia</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/nl.svg" alt="Netherlands"></div>
+                                <span class="serve-text">Netherlands</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/ie.svg" alt="Ireland"></div>
+                                <span class="serve-text">Ireland</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/hk.svg" alt="Hong Kong"></div>
+                                <span class="serve-text">Hong Kong</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/sa.svg" alt="Saudi Arabia"></div>
+                                <span class="serve-text">Saudi Arabia</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/se.svg" alt="Sweden"></div>
+                                <span class="serve-text">Sweden</span>
+                            </div>
+                            <div class="serve-item">
+                                <div class="serve-flag"><img src="https://flagcdn.com/no.svg" alt="Norway"></div>
+                                <span class="serve-text">Norway</span>
+                            </div>
+                            <div class="serve-item">
+                                <span class="serve-text opacity-50 italic">And more...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="serve-footer fade-up">
+                    "Our strength lies in the ability to combine in-depth knowledge of cross sections of the industry
+                    with the specialized skills of our professionals, spreads across our widespread network."
+                </div>
+            </div>
+        </section>
+
         <!-- MARQUEE -->
         <div class="marquee-section">
             <div class="marquee-track">
@@ -2116,7 +2550,7 @@
         <section class="section">
             <div class="container">
                 <div class="section-head fade-up">
-                    <span class="section-label">04 / Client Reviews</span>
+                    <span class="section-label">06 / Client Reviews</span>
                     <h2 class="section-title">Trusted by teams<br><em>across the globe.</em></h2>
                     <div
                         class="rating-bar flex flex-row items-center gap-5 p-5 md:p-7 bg-white border border-slate-200 inline-flex mb-12 shadow-sm rounded-lg">
@@ -2253,39 +2687,13 @@
             </div>
         </section>
 
-        <!-- GLOBAL CITY STRIP -->
-        <div class="globe-strip grid grid-cols-2 lg:grid-cols-4 h-auto lg:h-[260px]">
-            <div class="globe-cell">
-                <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=75&auto=format&fit=crop"
-                    alt="New York">
-                <div class="globe-overlay"></div>
-                <div class="globe-label">New York</div>
-            </div>
-            <div class="globe-cell">
-                <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=75&auto=format&fit=crop"
-                    alt="London">
-                <div class="globe-overlay"></div>
-                <div class="globe-label">London</div>
-            </div>
-            <div class="globe-cell">
-                <img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=75&auto=format&fit=crop"
-                    alt="Singapore">
-                <div class="globe-overlay"></div>
-                <div class="globe-label">Singapore</div>
-            </div>
-            <div class="globe-cell">
-                <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=75&auto=format&fit=crop"
-                    alt="New Delhi">
-                <div class="globe-overlay"></div>
-                <div class="globe-label">New Delhi</div>
-            </div>
-        </div>
+
 
         <!-- PROCESS -->
         <section id="process" class="section section-alt">
             <div class="container">
                 <div class="section-head fade-up">
-                    <span class="section-label">05 / Workflow</span>
+                    <span class="section-label">07 / Workflow</span>
                     <h2 class="section-title">The LedgerOne<br><em>Method.</em></h2>
                 </div>
                 <div
@@ -2317,57 +2725,108 @@
             </div>
         </section>
 
-        <!-- LEADERSHIP -->
-        <section id="directors" class="section">
-            <div class="container">
-                <div class="section-head fade-up">
-                    <span class="section-label">06 / Leadership</span>
-                    <h2 class="section-title">Expert <em>guided.</em></h2>
-                </div>
-                <div class="leader-list border-t border-slate-200">
-                    <div
-                        class="leader-row fade-up grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] items-center py-10 md:py-11 border-b border-slate-200">
-                        <div>
-                            <div class="leader-name">Kavita Kingrani</div>
-                            <div class="leader-role">Founder · Virtual CFO & Compliance</div>
-                        </div>
-                        <div class="leader-bio">Strategic financial leadership and regulatory excellence. Primary
-                            architect of our compliance frameworks across Indian and international jurisdictions.</div>
-                        <div class="leader-arrow"><i data-lucide="arrow-up-right" size="20"></i></div>
-                    </div>
-                    <div
-                        class="leader-row fade-up grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] items-center py-10 md:py-11 border-b border-slate-200">
-                        <div>
-                            <div class="leader-name">CA Deepesh Kingrani</div>
-                            <div class="leader-role">Head of Delivery · International Accounting</div>
-                        </div>
-                        <div class="leader-bio">Chartered Accountant leading global offshore accounting delivery. Expert
-                            in US GAAP, IFRS, and Indian Accounting Standards.</div>
-                        <div class="leader-arrow"><i data-lucide="arrow-up-right" size="20"></i></div>
-                    </div>
-                    <div
-                        class="leader-row fade-up grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] items-center py-10 md:py-11 border-b border-slate-200">
-                        <div>
-                            <div class="leader-name">Ramesh Chand Kingrani</div>
-                            <div class="leader-role">Founder · Business Strategy Advisor</div>
-                        </div>
-                        <div class="leader-bio">Decades of expertise in business architecture, corporate structuring,
-                            and cross-border advisory for high-growth enterprises.</div>
-                        <div class="leader-arrow"><i data-lucide="arrow-up-right" size="20"></i></div>
-                    </div>
-                </div>
-            </div>
+        </div>
+        </div>
         </section>
 
-        <!-- CTA -->
-        <section id="contact" class="cta-section">
+        <!-- CONTACT US -->
+        <section id="contact" class="section bg-slate-50">
             <div class="container">
-                <h2>Ready to <em>optimize</em><br>your financials?</h2>
-                <p>Join enterprises from 15+ countries that trust LedgerOne as their financial backbone.</p>
-                <div class="cta-actions">
-                    <a href="mailto:info@ledgeronellp.com" class="btn-primary">Book a Free Consultation</a>
-                    <a href="https://www.ledgeronellp.com/" class="btn-cta-outline" target="_blank">Visit Our
-                        Website</a>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+                    <div class="fade-up">
+                        <span class="section-label">07 / Contact Us</span>
+                        <h2 class="section-title">Ready to <em>optimize</em><br>your financials?</h2>
+                        <p class="text-slate-500 text-lg mb-10">Join enterprises from 15+ countries that trust LedgerOne
+                            as their financial backbone. Reach out for a confidential consultation.</p>
+
+                        <div class="space-y-8">
+                            <div class="flex items-start gap-5">
+                                <div
+                                    class="w-12 h-12 bg-white flex items-center justify-center border border-slate-200 text-accent">
+                                    <i data-lucide="mail" size="22"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold uppercase tracking-widest text-primary mb-1">Email Us
+                                    </h4>
+                                    <a href="mailto:info@ledgeronellp.com"
+                                        class="text-slate-600 hover:text-accent transition-colors">info@ledgeronellp.com</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-5">
+                                <div
+                                    class="w-12 h-12 bg-white flex items-center justify-center border border-slate-200 text-accent">
+                                    <i data-lucide="phone" size="22"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold uppercase tracking-widest text-primary mb-1">Call Us
+                                    </h4>
+                                    <a href="tel:+911234567890"
+                                        class="text-slate-600 hover:text-accent transition-colors">+91 12345 67890</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-5">
+                                <div
+                                    class="w-12 h-12 bg-white flex items-center justify-center border border-slate-200 text-accent">
+                                    <i data-lucide="map-pin" size="22"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold uppercase tracking-widest text-primary mb-1">Our Office
+                                    </h4>
+                                    <p class="text-slate-600">New Delhi, India — 110001</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fade-up fade-up-delay-1 bg-white p-8 md:p-12 shadow-premium border border-slate-100">
+                        <form action="#" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-[0.65rem] font-extrabold uppercase tracking-widest text-slate-400">Full
+                                        Name</label>
+                                    <input type="text" placeholder="John Doe"
+                                        class="w-full px-5 py-4 bg-slate-50 border border-slate-100 focus:border-accent focus:bg-white outline-none transition-all text-sm">
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-[0.65rem] font-extrabold uppercase tracking-widest text-slate-400">Email
+                                        Address</label>
+                                    <input type="email" placeholder="john@company.com"
+                                        class="w-full px-5 py-4 bg-slate-50 border border-slate-100 focus:border-accent focus:bg-white outline-none transition-all text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-[0.65rem] font-extrabold uppercase tracking-widest text-slate-400">Company</label>
+                                    <input type="text" placeholder="Acme Inc."
+                                        class="w-full px-5 py-4 bg-slate-50 border border-slate-100 focus:border-accent focus:bg-white outline-none transition-all text-sm">
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-[0.65rem] font-extrabold uppercase tracking-widest text-slate-400">Service
+                                        Needed</label>
+                                    <select
+                                        class="w-full px-5 py-4 bg-slate-50 border border-slate-100 focus:border-accent focus:bg-white outline-none transition-all text-sm appearance-none">
+                                        <option>Global Accounting</option>
+                                        <option>Virtual CFO</option>
+                                        <option>Indian Tax & Compliance</option>
+                                        <option>Company Setup</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[0.65rem] font-extrabold uppercase tracking-widest text-slate-400">Message</label>
+                                <textarea rows="4" placeholder="Tell us about your requirements..."
+                                    class="w-full px-5 py-4 bg-slate-50 border border-slate-100 focus:border-accent focus:bg-white outline-none transition-all text-sm resize-none"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-primary text-white py-5 text-[0.75rem] font-extrabold uppercase tracking-[0.2em] hover:bg-accent transition-all duration-300">Send
+                                Inquiry</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2379,9 +2838,8 @@
         <div class="container mx-auto px-6">
             <div class="footer-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14 mb-16">
                 <div class="footer-brand">
-                    <a href="#" class="logo">
-                        <div class="logo-icon"><i data-lucide="layers" size="14" style="color:white;"></i></div>
-                        LedgerOne <span style="font-weight:300;opacity:.38;margin-left:2px;">LLP</span>
+                    <a href="index.html" class="logo flex items-center gap-2.5 no-underline">
+                        <img src="logo.png" alt="LedgerOne LLP" class="h-20 w-auto grayscale brightness-50">
                     </a>
                     <p>Premium virtual accounting, GST, compliance, and CFO services for Indian and global enterprises.
                         Based in New Delhi, serving the world.</p>
@@ -2463,10 +2921,8 @@
         gsap.from(".hero-label", { y: 20, opacity: 0, duration: 0.8, delay: 0.1 });
         gsap.from(".hero-sub", { y: 30, opacity: 0, duration: 0.8, delay: 0.65 });
         gsap.from(".hero-actions", { y: 30, opacity: 0, duration: 0.8, delay: 0.85 });
-        gsap.from(".stat-item", { y: 20, opacity: 0, duration: 0.6, stagger: 0.12, delay: 1.05 });
-        gsap.from(".collage-main", { x: 60, opacity: 0, duration: 1.2, ease: "power3.out", delay: 0.5 });
-        gsap.from(".collage-secondary", { x: -40, opacity: 0, duration: 1.0, ease: "power3.out", delay: 0.9 });
-        gsap.from(".collage-badge", { scale: 0.8, opacity: 0, duration: 0.7, ease: "back.out(1.5)", delay: 1.2 });
+        gsap.from(".hero-card", { y: 40, opacity: 0, duration: 0.8, stagger: 0.15, delay: 1.1 });
+        gsap.from(".scroll-indicator", { opacity: 0, duration: 1, delay: 1.5 });
     </script>
 </body>
 
