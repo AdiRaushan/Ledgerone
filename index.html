@@ -239,111 +239,178 @@
             transform: translateY(-2px);
         }
 
+        /* ── MOBILE MENU ── */
         .hamburger {
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: flex-end;
-            gap: 4px;
+            gap: 6px;
             cursor: pointer;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            transition: background .3s;
+            width: 40px;
+            height: 40px;
+            transition: all 0.3s;
             position: relative;
-        }
-
-        .hamburger:hover {
-            background: rgba(0, 77, 97, 0.05);
+            z-index: 2001;
+            margin-right: -8px;
+            /* Offset padding for edge alignment */
         }
 
         .hamburger span {
             display: block;
-            height: 2px;
-            background: var(--text);
-            transition: all .3s var(--ease);
-            border-radius: 2px;
+            height: 1.5px;
+            background: white;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 4px;
+        }
+
+        #navbar.scrolled .hamburger span {
+            background: var(--primary);
         }
 
         .hamburger span:nth-child(1) {
-            width: 22px;
+            width: 28px;
         }
 
         .hamburger span:nth-child(2) {
-            width: 16px;
-        }
-
-        .hamburger span:nth-child(3) {
             width: 20px;
         }
 
+        .hamburger span:nth-child(3) {
+            width: 26px;
+        }
+
+        .hamburger.open span {
+            background: var(--primary) !important;
+        }
+
         .hamburger.open span:nth-child(1) {
-            transform: translateY(6px) rotate(45deg);
-            width: 22px;
+            transform: translateY(7.5px) rotate(45deg);
+            width: 28px;
         }
 
         .hamburger.open span:nth-child(2) {
             opacity: 0;
+            transform: translateX(10px);
         }
 
         .hamburger.open span:nth-child(3) {
-            transform: translateY(-6px) rotate(-45deg);
-            width: 22px;
+            transform: translateY(-7.5px) rotate(-45deg);
+            width: 28px;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 15, 30, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s var(--ease);
+        }
+
+        .mobile-menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
         }
 
         .mobile-menu {
-            display: none;
             position: fixed;
-            top: 80px;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            padding: 24px 6%;
-            border-bottom: 1px solid var(--border);
-            z-index: 999;
-            transform: translateY(-8px);
-            opacity: 0;
-            transition: all 0.4s var(--ease);
-            pointer-events: none;
-            max-height: calc(100vh - 80px);
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 400px;
+            height: 100%;
+            background: white;
+            z-index: 2000;
+            padding: 100px 40px 60px;
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s var(--ease);
             overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) transparent;
-        }
-
-        .mobile-menu::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .mobile-menu::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .mobile-menu::-webkit-scrollbar-thumb {
-            background: rgba(0, 77, 97, 0.1);
-            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
         }
 
         .mobile-menu.open {
-            display: block;
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: all;
+            right: 0;
         }
 
-        .mob-sec {
+        .mobile-menu a {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            margin-bottom: 20px;
+            transform: translateX(20px);
+            opacity: 0;
+            transition: all 0.4s var(--ease);
+        }
+
+        .mobile-menu.open a {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .mobile-menu .sub-link {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-left: 15px;
+            margin-bottom: 12px;
+        }
+
+        .mob-label {
             font-size: 0.65rem;
             font-weight: 800;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--accent);
-            padding: 24px 0 10px;
-            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 10px;
+        }
+
+        .mob-link-main {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary) !important;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .mob-link-main i {
+            color: var(--accent);
+        }
+
+        .sub-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted) !important;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .sub-link:active {
+            color: var(--accent) !important;
+        }
+
+        .social-btn-mob {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .social-btn-mob:active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         .mob-sec::after {
@@ -1891,16 +1958,19 @@
         /* ── RESPONSIVE ── */
         @media(max-width:768px) {
             #navbar {
-                width: 92%;
+                width: 96%;
+                left: 2%;
                 top: 10px;
             }
 
             .nav-inner {
                 height: 70px;
+                padding-left: 20px;
+                padding-right: 20px;
             }
 
             .logo img {
-                height: 4.8rem;
+                height: 4.4rem;
                 margin-top: 0;
             }
 
@@ -1921,6 +1991,10 @@
 
             .dropdown:hover .mega-menu {
                 transform: translateX(0) translateY(0);
+            }
+
+            .hero {
+                padding-top: 180px !important;
             }
         }
     </style>
@@ -1945,63 +2019,121 @@
                         Services <i data-lucide="chevron-down" size="12"></i>
                     </a>
                     <div
-                        class="mega-menu absolute top-[calc(100%+6px)] left-1/2 -translate-x-1/2 -translate-y-2 bg-white border border-slate-100 shadow-premium min-w-[850px] opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-[var(--ease)] rounded-sm">
-                        <div class="mega-inner grid grid-cols-3 p-2">
+                        class="mega-menu absolute top-[calc(100%+6px)] left-1/2 -translate-x-1/2 -translate-y-2 bg-white border border-slate-100 shadow-premium min-w-[1250px] opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-[var(--ease)] rounded-sm">
+                        <div class="mega-inner grid grid-cols-5 p-2">
+                            <!-- Global Accounting -->
                             <div class="mega-col p-6 border-r border-slate-100">
                                 <div
                                     class="mega-col-title text-[0.6rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-3 pb-2 border-b border-slate-100">
                                     Global Accounting</div>
                                 <div class="flex flex-col gap-1">
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Bookkeeping
-                                        & Reconcile</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Daily
+                                        Bookkeeping</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Virtual
-                                        CFO Services</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Bank
+                                        Reconciliation</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">AP
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">AP
                                         / AR Management</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">MIS
-                                        & Reporting</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">GAAP
+                                        / IFRS Reports</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">White-label
+                                        Support</a>
                                 </div>
                             </div>
+                            <!-- Virtual CFO -->
                             <div class="mega-col p-6 border-r border-slate-100">
                                 <div
                                     class="mega-col-title text-[0.6rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-3 pb-2 border-b border-slate-100">
-                                    Company Setup</div>
+                                    Virtual CFO</div>
                                 <div class="flex flex-col gap-1">
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Private
-                                        Limited / LLP</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">MIS
+                                        & KPI Dashboards</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">ROC
-                                        & Secretarial</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Cash
+                                        Flow Forecast</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">FDI
-                                        & FEMA Advisory</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Budget
+                                        & Variance</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Startup
-                                        Registration</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Fundraising
+                                        Support</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Investor
+                                        Reporting</a>
                                 </div>
                             </div>
+                            <!-- India Entry -->
+                            <div class="mega-col p-6 border-r border-slate-100">
+                                <div
+                                    class="mega-col-title text-[0.6rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-3 pb-2 border-b border-slate-100">
+                                    India Entry</div>
+                                <div class="flex flex-col gap-1">
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Company
+                                        Incorporation</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">GST
+                                        & PAN Registrations</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">RBI
+                                        & FEMA Compliance</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Transfer
+                                        Pricing</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Bank
+                                        Account Setup</a>
+                                </div>
+                            </div>
+                            <!-- Tax & Compliance -->
+                            <div class="mega-col p-6 border-r border-slate-100">
+                                <div
+                                    class="mega-col-title text-[0.6rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-3 pb-2 border-b border-slate-100">
+                                    Tax & Compliance</div>
+                                <div class="flex flex-col gap-1">
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">GST
+                                        Returns & Audit</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Income
+                                        Tax Returns</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">TDS/TCS
+                                        Compliance</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">ROC
+                                        & Statutory Filings</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">GST
+                                        Notice Handling</a>
+                                </div>
+                            </div>
+                            <!-- Education Sector -->
                             <div class="mega-col p-6">
                                 <div
                                     class="mega-col-title text-[0.6rem] font-extrabold tracking-[0.2em] uppercase text-accent mb-3 pb-2 border-b border-slate-100">
-                                    Indian Tax</div>
+                                    Education Sector</div>
                                 <div class="flex flex-col gap-1">
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">GST
-                                        Returns & Audit</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Trust
+                                        Registration</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">ITR
-                                        Filing & Planning</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">12A
+                                        & 80G Filing</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">TDS
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">FCRA
                                         Compliance</a>
                                     <a href="#services"
-                                        class="mega-link text-slate-500 hover:text-primary text-[0.78rem] font-semibold py-1.5 transition-colors">Notice
-                                        & Assessment</a>
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Statutory
+                                        Audit</a>
+                                    <a href="#services"
+                                        class="mega-link text-slate-500 hover:text-primary text-[0.7rem] font-semibold py-1.5 transition-colors">Fee
+                                        Structuring</a>
                                 </div>
                             </div>
                         </div>
@@ -2020,39 +2152,80 @@
                 class="cta-nav bg-accent text-white px-6 py-3 text-[0.75rem] font-extrabold tracking-widest uppercase transition-all duration-300 hover:bg-white hover:text-accent whitespace-nowrap ml-5 shadow-lg">Book
                 Consultation</a>
 
-            <div class="hamburger md:hidden flex flex-col justify-center items-end gap-1 cursor-pointer w-10 h-10 rounded-full transition-colors hover:bg-white/10 relative"
-                id="hamburger">
-                <span class="block h-0.5 bg-white w-5 transition-all duration-300"></span>
-                <span class="block h-0.5 bg-white w-4 transition-all duration-300"></span>
-                <span class="block h-0.5 bg-white w-[18px] transition-all duration-300"></span>
+            <div class="hamburger md:hidden" id="hamburger" aria-label="Toggle Menu" aria-expanded="false"
+                role="button">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </header>
 
-    <div class="mobile-menu" id="mobile-menu">
-        <div class="px-6 py-8 border-b border-slate-100 mb-6">
-            <img src="logo.png" alt="LedgerOne" class="h-16 w-auto">
+    <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu" aria-label="Mobile Navigation">
+        <div class="flex justify-between items-center mb-10">
+            <div>
+                <img src="logo.png" alt="LedgerOne" class="h-12 w-auto mb-2">
+                <p class="text-[0.55rem] font-bold text-slate-400 uppercase tracking-widest">Financial Infrastructure
+                </p>
+            </div>
+            <button class="w-10 h-10 flex items-center justify-center text-primary" id="mobile-close"
+                aria-label="Close Menu">
+                <i data-lucide="x" size="24"></i>
+            </button>
         </div>
-        <a href="#home">Home</a>
-        <div class="mob-sec">Global Accounting</div>
-        <a href="#services" class="sub">Bookkeeping & Reconciliation</a>
-        <a href="#services" class="sub">MIS & Management Reporting</a>
-        <a href="#services" class="sub">Virtual CFO Services</a>
-        <a href="#services" class="sub">AP / AR Management</a>
-        <div class="mob-sec">Company Setup</div>
-        <a href="#services" class="sub">Private Limited / LLP</a>
-        <a href="#services" class="sub">ROC & Secretarial</a>
-        <a href="#services" class="sub">FDI & FEMA Advisory</a>
-        <a href="#services" class="sub">Startup India Registration</a>
-        <div class="mob-sec">Indian Tax</div>
-        <a href="#services" class="sub">GST Registration & Returns</a>
-        <a href="#services" class="sub">ITR Filing (All Types)</a>
-        <a href="#services" class="sub">TDS / TCS Compliance</a>
-        <a href="#services" class="sub">Tax Audit</a>
-        <a href="about.html">About</a>
-        <a href="blog.html">Blogs</a>
-        <a href="#contact">Contact</a>
-        <a href="#contact" class="mobile-cta">Book Consultation</a>
+
+        <div class="mob-nav-content flex-1">
+            <a href="#home" class="mob-link-main flex items-center gap-4" style="transition-delay: 0.1s;">
+                <i data-lucide="home" size="20" class="text-accent"></i> Home
+            </a>
+
+            <div class="mob-category mt-8">
+                <span class="mob-label flex items-center gap-2 mb-4">
+                    <i data-lucide="briefcase" size="14"></i> Services
+                </span>
+                <div class="flex flex-col gap-1 pl-4 border-l border-slate-100">
+                    <a href="#services" class="sub-link flex items-center gap-3 py-2" style="transition-delay: 0.2s;">
+                        <span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Global & Offshore
+                    </a>
+                    <a href="#services" class="sub-link flex items-center gap-3 py-2" style="transition-delay: 0.25s;">
+                        <span class="w-1.5 h-1.5 bg-accent rounded-full"></span> India Entry
+                    </a>
+                    <a href="#services" class="sub-link flex items-center gap-3 py-2" style="transition-delay: 0.3s;">
+                        <span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Tax & Compliance
+                    </a>
+                    <a href="#services" class="sub-link flex items-center gap-3 py-2" style="transition-delay: 0.35s;">
+                        <span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Education Sector
+                    </a>
+                </div>
+            </div>
+
+            <div class="mob-category mt-8">
+                <span class="mob-label flex items-center gap-2 mb-4">
+                    <i data-lucide="info" size="14"></i> Company
+                </span>
+                <a href="about.html" class="mob-link-main flex items-center gap-4 py-2" style="transition-delay: 0.4s;">
+                    <i data-lucide="users" size="20" class="text-accent"></i> About Us
+                </a>
+                <a href="blog.html" class="mob-link-main flex items-center gap-4 py-2" style="transition-delay: 0.45s;">
+                    <i data-lucide="book-open" size="20" class="text-accent"></i> Insights
+                </a>
+                <a href="#contact" class="mob-link-main flex items-center gap-4 py-2" style="transition-delay: 0.5s;">
+                    <i data-lucide="phone" size="20" class="text-accent"></i> Contact
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-10 pt-8 border-t border-slate-100">
+            <a href="#contact"
+                class="bg-primary text-white text-center py-4 rounded-lg text-sm font-bold uppercase tracking-widest block shadow-lg active:scale-[0.98] transition-transform">Book
+                Consultation</a>
+            <div class="flex justify-center gap-6 mt-8">
+                <a href="#" class="social-btn-mob"><i data-lucide="linkedin" size="20"></i></a>
+                <a href="#" class="social-btn-mob"><i data-lucide="twitter" size="20"></i></a>
+                <a href="#" class="social-btn-mob"><i data-lucide="mail" size="20"></i></a>
+            </div>
+        </div>
     </div>
 
     <main>
@@ -2104,11 +2277,11 @@
                                 <div class="form-group">
                                     <select class="form-input form-select" required>
                                         <option value="" disabled selected>Select Service</option>
-                                        <option value="global-accounting">Global Accounting</option>
-                                        <option value="company-setup">Company Setup / Registration</option>
-                                        <option value="indian-tax">Indian Tax Compliance</option>
+                                        <option value="global-accounting">Global & Offshore Bookkeeping</option>
                                         <option value="virtual-cfo">Virtual CFO Services</option>
-                                        <option value="audit-assurance">Audit & Assurance</option>
+                                        <option value="india-entry">India Entry & Business Setup</option>
+                                        <option value="compliance-tax">Compliance & Tax Services</option>
+                                        <option value="education-accounting">Education Sector Accounting</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -2149,27 +2322,33 @@
                             class="svc-icon-new w-16 h-16 bg-primary/5 flex items-center justify-center rounded-sm mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <i data-lucide="globe-2" size="30"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-primary mb-4 tracking-tight">Global Accounting</h3>
-                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">End-to-end financial
-                            infrastructure for global firms, including bookkeeping, reconciliation, and automated
-                            reporting.</p>
+                        <h3 class="text-2xl font-bold text-primary mb-2 tracking-tight">Global Accounting & Offshore
+                            Bookkeeping</h3>
+                        <p class="text-slate-400 text-[0.65rem] font-extrabold uppercase tracking-widest mb-4">
+                            International Businesses & CPA Firms</p>
+                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">White-label offshore accounting
+                            services tailored for firms in the US, UK, Australia, and Canada. Led by a Chartered
+                            Accountant.</p>
                         <ul class="space-y-4 mb-10">
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> Multi-currency Bookkeeping
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Daily / Weekly Bookkeeping
                             </li>
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> Virtual CFO Advisory
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Bank & Credit Card Recon
                             </li>
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> Payroll & AP/AR Management
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Accounts Payable & Receivable
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Financial Statements (GAAP/IFRS)
                             </li>
                         </ul>
                         <a href="#contact"
-                            class="inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-widest text-accent group-hover:gap-4 transition-all">Explore
-                            Service <i data-lucide="arrow-right" size="14"></i></a>
+                            class="inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-widest text-accent group-hover:gap-4 transition-all">Get
+                            Started <i data-lucide="arrow-right" size="14"></i></a>
                     </div>
 
-                    <!-- Company Setup Card -->
+                    <!-- Virtual CFO Card -->
                     <div class="svc-card-new group bg-white p-10 border border-slate-100 shadow-sm hover:shadow-premium transition-all duration-500 relative overflow-hidden fade-up"
                         style="animation-delay: 0.1s;">
                         <div
@@ -2177,21 +2356,26 @@
                         </div>
                         <div
                             class="svc-icon-new w-16 h-16 bg-primary/5 flex items-center justify-center rounded-sm mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                            <i data-lucide="building-2" size="30"></i>
+                            <i data-lucide="pie-chart" size="30"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-primary mb-4 tracking-tight">Company Setup</h3>
-                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">Strategic business formation and
-                            structural compliance for startups and international entities entering the Indian market.
+                        <h3 class="text-2xl font-bold text-primary mb-2 tracking-tight">Virtual CFO Services</h3>
+                        <p class="text-slate-400 text-[0.65rem] font-extrabold uppercase tracking-widest mb-4">Startups
+                            & Funded Companies</p>
+                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">Strategic financial leadership to
+                            guide growth, manage cash flow, and support fundraising without the cost of a full-time CFO.
                         </p>
                         <ul class="space-y-4 mb-10">
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> Private Limited & LLP Setup
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Monthly MIS & KPI Dashboards
                             </li>
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> FDI & FEMA Compliance
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Cash Flow Forecasting
                             </li>
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> Startup India Advisory
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Fundraising & Due Diligence
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Budgeting & Variance Analysis
                             </li>
                         </ul>
                         <a href="#contact"
@@ -2199,7 +2383,7 @@
                             Service <i data-lucide="arrow-right" size="14"></i></a>
                     </div>
 
-                    <!-- Indian Tax Card -->
+                    <!-- India Entry Card -->
                     <div class="svc-card-new group bg-white p-10 border border-slate-100 shadow-sm hover:shadow-premium transition-all duration-500 relative overflow-hidden fade-up"
                         style="animation-delay: 0.2s;">
                         <div
@@ -2207,20 +2391,97 @@
                         </div>
                         <div
                             class="svc-icon-new w-16 h-16 bg-primary/5 flex items-center justify-center rounded-sm mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                            <i data-lucide="landmark" size="30"></i>
+                            <i data-lucide="map-pin" size="30"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-primary mb-4 tracking-tight">Indian Tax & Audit</h3>
-                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">Precision-led tax strategies and
-                            compliance management, ensuring your business stays audit-ready and tax-efficient.</p>
+                        <h3 class="text-2xl font-bold text-primary mb-2 tracking-tight">India Entry & Business Setup
+                        </h3>
+                        <p class="text-slate-400 text-[0.65rem] font-extrabold uppercase tracking-widest mb-4">Global
+                            Companies entering India</p>
+                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">Launch and operate in India with
+                            complete compliance, handling everything from incorporation to ongoing regulatory support.
+                        </p>
                         <ul class="space-y-4 mb-10">
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> GST & Income Tax Management
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Entry Strategy (Pvt Ltd, LLP)
                             </li>
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> Tax Audit & Representations
+                                <div class="w-1.5 h-1.5 bg-accent"></div> GST, PAN, TAN & IEC Registration
                             </li>
                             <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
-                                <div class="w-1.5 h-1.5 bg-accent"></div> NRI & Cross-border Taxation
+                                <div class="w-1.5 h-1.5 bg-accent"></div> RBI & FEMA Compliance
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Transfer Pricing Documentation
+                            </li>
+                        </ul>
+                        <a href="#contact"
+                            class="inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-widest text-accent group-hover:gap-4 transition-all">Explore
+                            Service <i data-lucide="arrow-right" size="14"></i></a>
+                    </div>
+
+                    <!-- Compliance & Tax Card -->
+                    <div
+                        class="svc-card-new group bg-white p-10 border border-slate-100 shadow-sm hover:shadow-premium transition-all duration-500 relative overflow-hidden fade-up">
+                        <div
+                            class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -mr-10 -mt-10 group-hover:bg-accent/5 transition-colors">
+                        </div>
+                        <div
+                            class="svc-icon-new w-16 h-16 bg-primary/5 flex items-center justify-center rounded-sm mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                            <i data-lucide="file-check" size="30"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-2 tracking-tight">Compliance & Tax Services</h3>
+                        <p class="text-slate-400 text-[0.65rem] font-extrabold uppercase tracking-widest mb-4">India
+                            SMEs & Professionals</p>
+                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">Complete compliance management
+                            with zero penalties. We handle all regulatory and tax matters so you can focus on growth.
+                        </p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> GST Registration & Filing
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Income Tax Returns (ITR)
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Tax Audit & ROC Filings
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> GST Notice Handling
+                            </li>
+                        </ul>
+                        <a href="#contact"
+                            class="inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-widest text-accent group-hover:gap-4 transition-all">Explore
+                            Service <i data-lucide="arrow-right" size="14"></i></a>
+                    </div>
+
+                    <!-- Education Sector Card -->
+                    <div class="svc-card-new group bg-white p-10 border border-slate-100 shadow-sm hover:shadow-premium transition-all duration-500 relative overflow-hidden fade-up"
+                        style="animation-delay: 0.1s;">
+                        <div
+                            class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -mr-10 -mt-10 group-hover:bg-accent/5 transition-colors">
+                        </div>
+                        <div
+                            class="svc-icon-new w-16 h-16 bg-primary/5 flex items-center justify-center rounded-sm mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                            <i data-lucide="graduation-cap" size="30"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-2 tracking-tight">Education Sector Accounting</h3>
+                        <p class="text-slate-400 text-[0.65rem] font-extrabold uppercase tracking-widest mb-4">Schools,
+                            Trusts & EdTech</p>
+                        <p class="text-slate-500 text-[0.95rem] leading-relaxed mb-8">Specialized CA services for
+                            institutions. We understand the unique compliance and tax structures of the education
+                            sector.</p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Trust / Society Registration
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> 12A & 80G Registration
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> FCRA Compliance
+                            </li>
+                            <li class="flex items-center gap-3 text-[0.85rem] font-semibold text-slate-600">
+                                <div class="w-1.5 h-1.5 bg-accent"></div> Statutory Audit & Fee Structuring
                             </li>
                         </ul>
                         <a href="#contact"
@@ -2490,14 +2751,8 @@
                                 <div class="serve-flag"><img src="https://flagcdn.com/au.svg" alt="Australia"></div>
                                 <span class="serve-text">Australia</span>
                             </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/nl.svg" alt="Netherlands"></div>
-                                <span class="serve-text">Netherlands</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/ie.svg" alt="Ireland"></div>
-                                <span class="serve-text">Ireland</span>
-                            </div>
+
+
                             <div class="serve-item">
                                 <div class="serve-flag"><img src="https://flagcdn.com/hk.svg" alt="Hong Kong"></div>
                                 <span class="serve-text">Hong Kong</span>
@@ -2506,14 +2761,8 @@
                                 <div class="serve-flag"><img src="https://flagcdn.com/sa.svg" alt="Saudi Arabia"></div>
                                 <span class="serve-text">Saudi Arabia</span>
                             </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/se.svg" alt="Sweden"></div>
-                                <span class="serve-text">Sweden</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/no.svg" alt="Norway"></div>
-                                <span class="serve-text">Norway</span>
-                            </div>
+
+
                             <div class="serve-item">
                                 <span class="serve-text opacity-50 italic">And more...</span>
                             </div>
@@ -2872,6 +3121,13 @@
                     <a href="tel:+911234567890">+91 12345 67890</a>
                     <a href="#">New Delhi, India — 110001</a>
                     <a href="#">Mon–Sat · 9AM–7PM IST</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Connect</h5>
+                    <a href="https://www.linkedin.com/in/ca-deepesh-kingrani-34a90365/" target="_blank">CA Deepesh Kingrani</a>
+                    <a href="https://www.linkedin.com/in/cs-kavita-kingrani-698a34151/" target="_blank">CS Kavita Kingrani</a>
+                    <a href="https://www.linkedin.com/in/casagarnarang/" target="_blank">CA Sagar Narang</a>
+                </div>
                     <a href="#contact"
                         style="margin-top:12px;display:inline-block;background:var(--accent);color:white;padding:10px 16px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;">Book
                         Consultation</a>
@@ -2898,15 +3154,23 @@
         // Mobile menu
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const mobileClose = document.getElementById('mobile-close');
+
+        const toggleMenu = () => {
+            const isOpen = hamburger.classList.toggle('open');
             mobileMenu.classList.toggle('open');
-            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-        });
+            mobileOverlay.classList.toggle('open');
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+            hamburger.setAttribute('aria-expanded', isOpen);
+        };
+
+        hamburger.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
+        mobileClose.addEventListener('click', toggleMenu);
+
         document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', () => {
-            hamburger.classList.remove('open');
-            mobileMenu.classList.remove('open');
-            document.body.style.overflow = '';
+            if (mobileMenu.classList.contains('open')) toggleMenu();
         }));
 
         // Fade-up observer

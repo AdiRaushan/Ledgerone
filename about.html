@@ -37,19 +37,15 @@
         }
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
             --primary: #0e3a6c;
             --accent: #c5a059;
             --bg: #ffffff;
             --surface: #f7f9fc;
-            --surface2: #eef2f7;
             --text: #0a0f14;
             --text-muted: #526071;
             --border: rgba(0, 0, 0, 0.08);
-            --border2: rgba(0, 0, 0, 0.13);
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
@@ -63,124 +59,143 @@
         #navbar.scrolled { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
         .nav-inner { height: 100px; transition: all 0.5s var(--ease); display: flex; align-items: center; justify-content: space-between; }
         #navbar.scrolled .nav-inner { height: 80px; }
-        #navbar.scrolled .nav-link { color: var(--primary) !important; }
         .logo img { height: 6rem; width: auto; transition: all 0.4s var(--ease); object-fit: contain; }
         #navbar.scrolled .logo img { height: 5.2rem; }
-        @media (max-width: 1024px) { .logo img { height: 4.8rem; } }
-
+        
+        .nav-link { transition: all 0.3s; }
+        
         /* Mega menu */
-        .mega-menu { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%) translateY(-8px); background: #fff; border: 1px solid var(--border); box-shadow: 0 20px 72px rgba(0, 0, 0, 0.12); min-width: 620px; opacity: 0; visibility: hidden; transition: all .3s var(--ease); }
-        .group:hover .mega-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        .mega-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+        .dropdown { position: relative; }
+        .mega-menu { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%) translateY(-8px); background: #fff; border: 1px solid var(--border); box-shadow: 0 20px 72px rgba(0, 0, 0, 0.12); min-width: 1250px; opacity: 0; visibility: hidden; transition: all .3s var(--ease); }
+        .dropdown:hover .mega-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        .mega-inner { display: grid; grid-template-columns: repeat(5, 1fr); }
         .mega-col { padding: 26px 22px; border-right: 1px solid var(--border); }
         .mega-col:last-child { border-right: none; }
         .mega-col-title { font-size: 0.6rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-        .mega-link { display: flex; align-items: flex-start; gap: 9px; padding: 8px 0; text-decoration: none; color: var(--text-muted); font-size: 0.78rem; font-weight: 600; border-bottom: 1px solid rgba(0, 0, 0, .04); transition: color .2s; }
+        .mega-link { display: flex; align-items: flex-start; gap: 9px; padding: 8px 0; text-decoration: none; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; border-bottom: 1px solid rgba(0, 0, 0, .04); transition: color .2s; }
+        .mega-link:last-child { border-bottom: none; }
         .mega-link:hover { color: var(--accent); }
 
+        @media (max-width: 1024px) { 
+            #navbar { width: 96%; left: 2%; top: 10px; }
+            .nav-inner { height: 70px; padding: 0 20px; }
+            .logo img { height: 4.4rem; } 
+            .mega-menu { display: none; }
+        }
+
+        /* ── MOBILE MENU ICON ── */
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: flex-end; gap: 6px; cursor: pointer; width: 40px; height: 40px; transition: all 0.3s; position: relative; z-index: 2001; margin-right: -8px; }
+        @media (max-width: 1024px) { .hamburger { display: flex; } }
+        .hamburger span { display: block; height: 1.5px; background: var(--primary); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 4px; }
+        .hamburger span:nth-child(1) { width: 28px; }
+        .hamburger span:nth-child(2) { width: 20px; }
+        .hamburger span:nth-child(3) { width: 26px; }
+        .hamburger.open span { background: var(--primary) !important; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); width: 28px; }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: translateX(10px); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); width: 28px; }
+
+        /* ── MOBILE MENU CONTENT ── */
+        .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0, 15, 30, 0.4); backdrop-filter: blur(4px); z-index: 1999; opacity: 0; visibility: hidden; transition: all 0.4s var(--ease); }
+        .mobile-menu-overlay.open { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; right: -100%; width: 85%; max-width: 400px; height: 100%; background: white; z-index: 2000; padding: 40px; box-shadow: -20px 0 60px rgba(0, 0, 0, 0.1); transition: all 0.5s var(--ease); overflow-y: auto; display: flex; flex-direction: column; }
+        .mobile-menu.open { right: 0; }
+        
+        .mob-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; }
+        .mob-link-main { font-size: 1.15rem; font-weight: 800; color: var(--primary) !important; text-decoration: none; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; opacity: 0; transform: translateX(20px); transition: all 0.4s var(--ease); }
+        .mobile-menu.open .mob-link-main { opacity: 1; transform: translateX(0); }
+        .sub-link { font-size: 0.9rem; font-weight: 600; color: var(--text-muted) !important; text-decoration: none; display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+        .social-btn-mob { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--primary); }
+
         /* Page Hero */
-        .page-hero {
-            padding: 220px 0 120px;
-            background: var(--surface);
-            position: relative;
-            overflow: hidden;
-        }
+        .page-hero { padding: 220px 0 120px; background: var(--surface); position: relative; overflow: hidden; }
+        @media (max-width: 1024px) { .page-hero { padding-top: 180px; } }
 
-        .page-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40%;
-            height: 100%;
-            background: var(--primary);
-            opacity: 0.03;
-            transform: skewX(-15deg) translateX(30%);
-        }
-
-        /* Fade-up animation */
+        /* Other Styles */
         .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s var(--ease); }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-        /* Section Title */
         .section-label { display: inline-flex; align-items: center; gap: 12px; font-size: .65rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
         .section-label::before { content: ''; display: block; width: 32px; height: 2px; background: var(--accent); }
         .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; tracking: -0.04em; line-height: 1.1; color: var(--primary); margin-bottom: 30px; }
         .section-title em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--accent); }
 
-        /* Serve Section */
-        .serve-section { background: var(--primary); color: white; padding: 100px 0; position: relative; }
-        .serve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 80px; }
-        @media (max-width: 1024px) { .serve-grid { grid-template-columns: 1fr; gap: 60px; } }
-        .serve-col-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 40px; color: white; position: relative; padding-bottom: 15px; }
-        .serve-col-title::after { content: ''; position: absolute; left: 0; bottom: 0; width: 50px; height: 3px; background: #c5a059; }
-        .serve-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px 40px; }
-        .serve-item { display: flex; align-items: center; gap: 15px; }
-        .serve-icon-box { width: 48px; height: 48px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); border-radius: 4px; }
-        .serve-flag { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .serve-flag img { width: 100%; height: 100%; object-fit: cover; }
-        .serve-text { font-size: 0.95rem; font-weight: 600; color: rgba(255, 255, 255, 0.9); }
-        .serve-footer { max-width: 900px; margin: 0 auto; text-align: center; font-size: 1.2rem; line-height: 1.6; color: rgba(255, 255, 255, 0.85); font-weight: 500; padding-top: 60px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-
         /* Footer */
         footer { background: var(--bg); border-top: 1px solid var(--border); padding: 76px 0 38px; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 60px; }
-        @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; } } }
+        @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
         .footer-col h5 { font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .18em; color: var(--text-muted); margin-bottom: 16px; }
         .footer-col a { display: block; font-size: .82rem; color: var(--text); text-decoration: none; margin-bottom: 10px; font-weight: 600; transition: color .2s; }
-        .footer-col a:hover { color: var(--accent); }
-        .social-btn { display: inline-flex; width: 36px; height: 36px; border: 1px solid var(--border); align-items: center; justify-content: center; color: var(--primary); margin-right: 8px; transition: all .3s; }
-        .social-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-        .footer-bottom { border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; }
-        .footer-bottom p { font-size: .74rem; color: var(--text-muted); font-weight: 600; }
-        .footer-legal a { font-size: .74rem; color: var(--text-muted); text-decoration: none; margin-left: 20px; font-weight: 600; }
-
-        /* Hamburger */
-        .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
-        @media (max-width: 1024px) { .hamburger { display: flex; } }
-        .hamburger span { display: block; height: 2px; background: var(--primary); transition: all .3s; }
-        .hamburger span:nth-child(1) { width: 22px; }
-        .hamburger span:nth-child(2) { width: 16px; }
-        .hamburger span:nth-child(3) { width: 20px; }
-
-        .mobile-menu { position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background: white; z-index: 2000; padding: 40px; transition: all 0.4s var(--ease); box-shadow: -10px 0 30px rgba(0,0,0,0.05); }
-        .mobile-menu.open { right: 0; }
-        .mobile-menu a { display: block; font-size: 1.2rem; font-weight: 700; color: var(--primary); text-decoration: none; margin-bottom: 25px; }
+        .social-btn { display: inline-flex; width: 36px; height: 36px; border: 1px solid var(--border); align-items: center; justify-content: center; color: var(--primary); margin-right: 8px; }
     </style>
 </head>
 
 <body>
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="container">
             <div class="nav-inner">
-                <a href="index.html" class="logo">
-                    <img src="logo.png" alt="LedgerOne LLP">
-                </a>
-
+                <a href="index.html" class="logo"><img src="logo.png" alt="LedgerOne LLP"></a>
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="index.html" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2">Home</a>
-                    <div class="group relative">
-                        <a href="index.html#services" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2 flex items-center gap-1">Services <i data-lucide="chevron-down" size="12"></i></a>
-                        <div class="mega-menu">
-                            <div class="mega-inner">
-                                <div class="mega-col">
+                    <div class="dropdown group relative">
+                        <a href="index.html#services" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2 flex items-center gap-1">
+                            Services <i data-lucide="chevron-down" size="12"></i>
+                        </a>
+                        <div class="mega-menu absolute top-[calc(100%+6px)] left-1/2 -translate-x-1/2 -translate-y-2 bg-white border border-slate-100 shadow-premium opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-[var(--ease)] rounded-sm">
+                            <div class="mega-inner grid grid-cols-5 p-2">
+                                <!-- Global Accounting -->
+                                <div class="mega-col p-6 border-r border-slate-100">
                                     <div class="mega-col-title">Global Accounting</div>
-                                    <a href="index.html#services" class="mega-link">Bookkeeping & Reconcile</a>
-                                    <a href="index.html#services" class="mega-link">Virtual CFO Services</a>
-                                    <a href="index.html#services" class="mega-link">AP / AR Management</a>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">Daily Bookkeeping</a>
+                                        <a href="index.html#services" class="mega-link">Bank Reconciliation</a>
+                                        <a href="index.html#services" class="mega-link">AP / AR Management</a>
+                                        <a href="index.html#services" class="mega-link">GAAP / IFRS Reports</a>
+                                        <a href="index.html#services" class="mega-link">White-label Support</a>
+                                    </div>
                                 </div>
-                                <div class="mega-col">
-                                    <div class="mega-col-title">Company Setup</div>
-                                    <a href="index.html#services" class="mega-link">Private Limited / LLP</a>
-                                    <a href="index.html#services" class="mega-link">FDI & FEMA Advisory</a>
-                                    <a href="index.html#services" class="mega-link">Startup Registration</a>
+                                <!-- Virtual CFO -->
+                                <div class="mega-col p-6 border-r border-slate-100">
+                                    <div class="mega-col-title">Virtual CFO</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">MIS & KPI Dashboards</a>
+                                        <a href="index.html#services" class="mega-link">Cash Flow Forecast</a>
+                                        <a href="index.html#services" class="mega-link">Budget & Variance</a>
+                                        <a href="index.html#services" class="mega-link">Fundraising Support</a>
+                                        <a href="index.html#services" class="mega-link">Investor Reporting</a>
+                                    </div>
                                 </div>
-                                <div class="mega-col">
-                                    <div class="mega-col-title">Indian Tax</div>
-                                    <a href="index.html#services" class="mega-link">GST Returns & Audit</a>
-                                    <a href="index.html#services" class="mega-link">ITR Filing & Planning</a>
-                                    <a href="index.html#services" class="mega-link">TDS Compliance</a>
+                                <!-- India Entry -->
+                                <div class="mega-col p-6 border-r border-slate-100">
+                                    <div class="mega-col-title">India Entry</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">Company Incorporation</a>
+                                        <a href="index.html#services" class="mega-link">GST & PAN Setup</a>
+                                        <a href="index.html#services" class="mega-link">RBI & FEMA Compliance</a>
+                                        <a href="index.html#services" class="mega-link">Transfer Pricing</a>
+                                        <a href="index.html#services" class="mega-link">Bank Account Setup</a>
+                                    </div>
+                                </div>
+                                <!-- Tax & Compliance -->
+                                <div class="mega-col p-6 border-r border-slate-100">
+                                    <div class="mega-col-title">Tax & Compliance</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">GST Returns & Audit</a>
+                                        <a href="index.html#services" class="mega-link">Income Tax Returns</a>
+                                        <a href="index.html#services" class="mega-link">TDS/TCS Compliance</a>
+                                        <a href="index.html#services" class="mega-link">ROC & Statutory Filings</a>
+                                        <a href="index.html#services" class="mega-link">GST Notice Handling</a>
+                                    </div>
+                                </div>
+                                <!-- Education Sector -->
+                                <div class="mega-col p-6">
+                                    <div class="mega-col-title">Education Sector</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">Trust Registration</a>
+                                        <a href="index.html#services" class="mega-link">12A & 80G Filing</a>
+                                        <a href="index.html#services" class="mega-link">FCRA Compliance</a>
+                                        <a href="index.html#services" class="mega-link">Statutory Audit</a>
+                                        <a href="index.html#services" class="mega-link">Fee Structuring</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -189,36 +204,89 @@
                     <a href="blog.html" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2">Blogs</a>
                     <a href="contact.html" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2">Contact</a>
                 </div>
-
-                <a href="contact.html" class="hidden lg:block cta-nav">Book Consultation</a>
-
-                <div class="hamburger" id="hamburger">
-                    <span></span><span></span><span></span>
-                </div>
+                <a href="contact.html" class="hidden lg:block bg-accent text-white px-6 py-3 text-[0.7rem] font-bold tracking-widest uppercase no-underline">Consultation</a>
+                <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
             </div>
         </div>
     </nav>
 
+    <div class="mobile-menu-overlay" id="mobile-overlay"></div>
     <div class="mobile-menu" id="mobile-menu">
-        <a href="index.html">Home</a>
-        <a href="index.html#services">Services</a>
-        <a href="about.html">About</a>
-        <a href="blog.html">Blogs</a>
-        <a href="contact.html">Contact</a>
+        <div class="flex justify-between items-center mb-10">
+            <div><img src="logo.png" alt="LedgerOne" class="h-12 w-auto mb-2"><p class="text-[0.55rem] font-bold text-slate-400 uppercase tracking-widest">Financial Infrastructure</p></div>
+            <button class="w-10 h-10 flex items-center justify-center text-primary" id="mobile-close"><i data-lucide="x" size="24"></i></button>
+        </div>
+        <div class="flex-1">
+            <a href="index.html" class="mob-link-main"><i data-lucide="home" size="20"></i> Home</a>
+            <div class="mb-8"><span class="mob-label mb-4"><i data-lucide="briefcase" size="14" class="mr-2"></i> Services</span>
+                <div class="pl-4 border-l border-slate-100 flex flex-col gap-2">
+                    <a href="index.html#services" class="sub-link"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Global & Offshore</a>
+                    <a href="index.html#services" class="sub-link"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span> India Entry</a>
+                    <a href="index.html#services" class="sub-link"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Tax & Compliance</a>
+                    <a href="index.html#services" class="sub-link"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Education Sector</a>
+                </div>
+            </div>
+            <a href="about.html" class="mob-link-main"><i data-lucide="users" size="20"></i> About Us</a>
+            <a href="blog.html" class="mob-link-main"><i data-lucide="book-open" size="20"></i> Insights</a>
+            <a href="contact.html" class="mob-link-main"><i data-lucide="phone" size="20"></i> Contact</a>
+        </div>
+        <div class="mt-10 pt-8 border-t border-slate-100">
+            <a href="contact.html" class="bg-primary text-white text-center py-4 rounded-lg text-sm font-bold uppercase tracking-widest block shadow-lg">Book Consultation</a>
+        </div>
     </div>
 
     <main>
-        <!-- Page Hero -->
         <section class="page-hero">
             <div class="container">
                 <div class="max-w-4xl fade-up">
                     <span class="section-label">Institutional Infrastructure</span>
-                    <h1 class="section-title">
-                        Empowering the <em class="text-accent">Global</em> Enterprise with Precision.
-                    </h1>
-                    <p class="text-xl text-text-muted leading-relaxed">
-                        LedgerOne LLP is built for the borderless economy. We provide the financial backbone that allows cross-border innovators to scale with absolute confidence.
-                    </p>
+                    <h1 class="section-title">Empowering the <em class="text-accent">Global</em> Enterprise with Precision.</h1>
+                    <p class="text-xl text-text-muted leading-relaxed">LedgerOne LLP is built for the borderless economy. We provide the financial backbone that allows cross-border innovators to scale with confidence.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact & Global Presence Section -->
+        <section class="py-24 bg-white overflow-hidden border-b border-slate-100">
+            <div class="container">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                    <div class="fade-up">
+                        <span class="section-label">Global Footprint</span>
+                        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary mb-6">India's Premier Accounting Partner for Global Businesses</h2>
+                        <p class="text-xl text-text-muted leading-relaxed mb-10">CA-led offshore accounting, Virtual CFO, India entry advisory, and full compliance — for businesses across the US, UK, UAE, Korea, Australia and 15+ countries.</p>
+                        
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇺🇸</span> USA</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇬🇧</span> UK</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇦🇪</span> UAE</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇰🇷</span> Korea</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇦🇺</span> Australia</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇨🇦</span> Canada</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇩🇪</span> Germany</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇸🇬</span> Singapore</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-slate-600"><span class="text-2xl">🇯🇵</span> Japan</div>
+                            <div class="flex items-center gap-3 text-sm font-bold text-accent italic">+ More</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-up" style="transition-delay: 0.2s;">
+                        <div class="p-10 bg-slate-50 border border-slate-100 rounded-sm">
+                            <div class="text-4xl font-extrabold text-primary mb-2">15+</div>
+                            <p class="text-[0.65rem] font-extrabold uppercase tracking-widest text-accent">Countries Served</p>
+                        </div>
+                        <div class="p-10 bg-primary text-white rounded-sm shadow-xl">
+                            <div class="text-4xl font-extrabold mb-2">10+</div>
+                            <p class="text-[0.65rem] font-extrabold uppercase tracking-widest text-white/70">Years Experience</p>
+                        </div>
+                        <div class="p-10 bg-slate-50 border border-slate-100 rounded-sm">
+                            <div class="text-4xl font-extrabold text-primary mb-2">₹500Cr+</div>
+                            <p class="text-[0.65rem] font-extrabold uppercase tracking-widest text-accent">Revenue Managed</p>
+                        </div>
+                        <div class="p-10 bg-slate-50 border border-slate-100 rounded-sm">
+                            <div class="text-4xl font-extrabold text-primary mb-2">Zero</div>
+                            <p class="text-[0.65rem] font-extrabold uppercase tracking-widest text-accent">Compliance Penalties</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -228,17 +296,17 @@
             <div class="container">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     <div class="fade-up">
-                        <div class="w-12 h-12 bg-surface2 flex items-center justify-center mb-6 text-primary"><i data-lucide="globe" size="24"></i></div>
+                        <div class="w-12 h-12 bg-slate-50 flex items-center justify-center mb-6 text-primary"><i data-lucide="globe" size="24"></i></div>
                         <h3 class="text-xl font-bold mb-4">Cross-Border Compliance</h3>
                         <p class="text-text-muted text-sm leading-relaxed">Navigating complex international regulations, FDI, and FEMA requirements for seamless global operations.</p>
                     </div>
-                    <div class="fade-up" style="animation-delay: 0.1s;">
-                        <div class="w-12 h-12 bg-surface2 flex items-center justify-center mb-6 text-primary"><i data-lucide="trending-up" size="24"></i></div>
+                    <div class="fade-up" style="transition-delay: 0.1s;">
+                        <div class="w-12 h-12 bg-slate-50 flex items-center justify-center mb-6 text-primary"><i data-lucide="trending-up" size="24"></i></div>
                         <h3 class="text-xl font-bold mb-4">Strategic CFO Advisory</h3>
                         <p class="text-text-muted text-sm leading-relaxed">Institutional-grade financial leadership providing board-level insights to drive sustainable growth.</p>
                     </div>
-                    <div class="fade-up" style="animation-delay: 0.2s;">
-                        <div class="w-12 h-12 bg-surface2 flex items-center justify-center mb-6 text-primary"><i data-lucide="database" size="24"></i></div>
+                    <div class="fade-up" style="transition-delay: 0.2s;">
+                        <div class="w-12 h-12 bg-slate-50 flex items-center justify-center mb-6 text-primary"><i data-lucide="database" size="24"></i></div>
                         <h3 class="text-xl font-bold mb-4">Modern Accounting</h3>
                         <p class="text-text-muted text-sm leading-relaxed">Cloud-first virtual bookkeeping and tax management that integrates perfectly with your existing tech stack.</p>
                     </div>
@@ -246,238 +314,166 @@
             </div>
         </section>
 
-        <!-- Founder Section -->
-        <section class="py-24 overflow-hidden">
+        <!-- Leadership & Team Section -->
+        <section class="py-24 overflow-hidden bg-slate-50/50">
             <div class="container">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <div class="text-center max-w-3xl mx-auto mb-20 fade-up">
+                    <span class="section-label justify-center">The Experts Behind LedgerOne</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary mb-6">Strategic Leadership</h2>
+                    <p class="text-lg text-text-muted">Our leadership combines decades of experience in global accounting, compliance, and strategic financial operations.</p>
+                </div>
+
+                <!-- Deepesh Kingrani (Founder) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24 max-w-6xl mx-auto">
                     <div class="lg:col-span-5 fade-up">
                         <div class="relative">
-                            <div class="aspect-[4/5] bg-slate-100 rounded-sm overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1000&q=80&auto=format&fit=crop" alt="CA Deepesh Kingrani" class="w-full h-full object-cover grayscale">
+                            <div class="aspect-[4/5] bg-slate-200 rounded-sm overflow-hidden shadow-2xl">
+                                <img src="C:\Users\Acer\.gemini\antigravity\brain\d077488c-d8cf-43cf-8d59-d4ab363f2eab\team_members_portraits_1777894564734.png" alt="CA Deepesh Kingrani" class="w-full h-full object-cover">
                             </div>
-                            <div class="absolute -bottom-6 -right-6 bg-accent w-24 h-24 flex items-center justify-center shadow-xl">
-                                <i data-lucide="award" size="48" class="text-white"></i>
-                            </div>
+                            <div class="absolute -bottom-6 -right-6 bg-primary w-20 h-20 flex items-center justify-center shadow-xl text-white rounded-sm"><i data-lucide="shield-check" size="32"></i></div>
                         </div>
                     </div>
-                    <div class="lg:col-span-7 space-y-8 fade-up" style="animation-delay: 0.2s;">
+                    <div class="lg:col-span-7 space-y-6 fade-up" style="transition-delay: 0.2s;">
                         <div>
-                            <span class="text-accent font-extrabold text-[0.7rem] uppercase tracking-[0.3em] mb-4 block">Leadership</span>
-                            <h2 class="text-5xl font-extrabold tracking-tighter mb-2 text-primary">CA Deepesh Kingrani</h2>
-                            <p class="text-accent font-bold text-lg">Head of Delivery — International Accounting & CFO Advisory</p>
-                            <p class="text-text-muted text-sm mt-2 uppercase tracking-widest font-bold">Chartered Accountant | FCA | 10+ Years | New Delhi, India</p>
+                            <span class="text-accent font-extrabold text-[0.7rem] uppercase tracking-[0.3em] mb-4 block">Founder & Head of Operations</span>
+                            <div class="flex items-center gap-4 mb-4">
+                                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary">CA Deepesh Kingrani</h2>
+                                <a href="https://www.linkedin.com/in/ca-deepesh-kingrani-34a90365/" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                                    <i data-lucide="linkedin" size="20"></i>
+                                </a>
+                            </div>
                         </div>
-
-                        <p class="text-3xl font-serif italic text-accent leading-relaxed">
-                            "Precision in numbers. Clarity in strategy. Trust in every engagement."
-                        </p>
-
-                        <div class="space-y-6 text-text-muted leading-relaxed text-lg">
-                            <p>Deepesh Kingrani is a Fellow Chartered Accountant with over a decade of hands-on experience in international accounting, GST, income tax litigation, audit, and virtual CFO advisory.</p>
-                            <p>Having worked with businesses across India, the US, the UK, and the UAE, Deepesh brings a rare combination of deep Indian regulatory expertise and global financial delivery standards — making him the preferred finance partner for overseas companies entering India and international CPA firms seeking reliable offshore accounting support.</p>
-                            <p>At LedgerOne LLP, Deepesh leads all client delivery — personally overseeing every engagement from onboarding to ongoing compliance — ensuring that each client receives institutional-grade financial leadership.</p>
+                        <div class="space-y-4 text-text-muted leading-relaxed text-[1.05rem]">
+                            <p>Deepesh Kingrani is a Chartered Accountant with 10+ years of experience in accounting, taxation, and financial operations. As Founder and Head of Operations, he leads delivery, client onboarding, and process standardization across all engagements.</p>
+                            <p>He has extensive experience working with white-label accounting firms, providing backend support for bookkeeping, reconciliations, and month-end reporting while maintaining strict confidentiality and quality standards. His work enables partner firms to scale efficiently without compromising on accuracy or turnaround time.</p>
+                            <p>Deepesh specializes in international accounting and Virtual CFO services, supporting clients across the UK, US, Australia, and other global markets. He focuses on building streamlined accounting systems, ensuring clean books, and delivering actionable financial insights for business decision-making.</p>
+                            <p>He also supports foreign businesses setting up in India, guiding them through entity structuring, compliance requirements, and ongoing financial management.</p>
+                            <p class="font-semibold text-primary italic">"His approach is practical, process-driven, and focused on delivering consistent, reliable outcomes for both direct clients and partner firms."</p>
                         </div>
-
-                        <div class="pt-6">
-                            <a href="https://www.linkedin.com/in/ca-deepesh-kingrani-216503b1" target="_blank" class="inline-flex items-center gap-3 text-primary hover:text-accent transition-colors font-bold uppercase tracking-widest text-sm">
-                                Connect on LinkedIn <i data-lucide="linkedin" size="20"></i>
+                        <div class="pt-6 border-t border-slate-100">
+                            <a href="https://www.linkedin.com/in/ca-deepesh-kingrani-34a90365/" target="_blank" class="inline-flex items-center gap-3 text-primary hover:text-accent transition-all font-extrabold uppercase tracking-[0.2em] text-[0.7rem]">
+                                Connect via LinkedIn <i data-lucide="linkedin" size="16"></i>
                             </a>
                         </div>
+
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- SERVE SECTION -->
-        <section class="serve-section">
-            <div class="container">
-                <div class="serve-grid">
-                    <!-- Left: Industries -->
-                    <div class="fade-up">
-                        <h2 class="serve-col-title">Industries We Serve</h2>
-                        <div class="serve-items-grid">
-                            <div class="serve-item">
-                                <div class="serve-icon-box"><i data-lucide="truck" size="20"></i></div>
-                                <span class="serve-text">Automotive & Transportation</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-icon-box"><i data-lucide="coffee" size="20"></i></div>
-                                <span class="serve-text">Hospitality</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-icon-box"><i data-lucide="shopping-cart" size="20"></i></div>
-                                <span class="serve-text">Retail & Wholesale</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-icon-box"><i data-lucide="factory" size="20"></i></div>
-                                <span class="serve-text">Manufacturing</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-icon-box"><i data-lucide="shield-check" size="20"></i></div>
-                                <span class="serve-text">Insurance</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-icon-box"><i data-lucide="building" size="20"></i></div>
-                                <span class="serve-text">Banking & Finance</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-icon-box"><i data-lucide="stethoscope" size="20"></i></div>
-                                <span class="serve-text">Healthcare</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-icon-box"><i data-lucide="scale" size="20"></i></div>
-                                <span class="serve-text">Law</span>
-                            </div>
-                            <div class="serve-item">
-                                <span class="serve-text opacity-50 italic">And more...</span>
+                <!-- Kavita Kingrani (Co-Founder) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24 max-w-6xl mx-auto">
+                    <div class="lg:col-span-7 order-2 lg:order-1 space-y-6 fade-up" style="transition-delay: 0.2s;">
+                        <div>
+                            <span class="text-accent font-extrabold text-[0.7rem] uppercase tracking-[0.3em] mb-4 block">Co-Founder | Compliance & International Accounting</span>
+                            <div class="flex items-center gap-4 mb-4">
+                                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-primary">CS Kavita Kingrani</h2>
+                                <a href="https://www.linkedin.com/in/cs-kavita-kingrani-698a34151/" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                                    <i data-lucide="linkedin" size="20"></i>
+                                </a>
                             </div>
                         </div>
-                    </div>
+                        <div class="space-y-4 text-text-muted leading-relaxed text-[1.05rem]">
+                            <p>Kavita Kingrani is a Company Secretary with 6+ years of experience in accounting, corporate compliance, and regulatory advisory. She plays a key role in managing compliance frameworks and supporting both domestic and international clients.</p>
+                            <p>In addition to her compliance expertise, she has hands-on experience in foreign accounting processes, including bookkeeping support, reconciliations, and financial documentation aligned with international standards. She works closely with clients and teams to ensure accuracy, consistency, and timely reporting.</p>
+                            <p>Her core strengths include ROC compliance, company law advisory, corporate structuring, and regulatory filings, along with supporting foreign clients entering the Indian market through incorporation and statutory registrations.</p>
+                            <p class="font-semibold text-primary italic">"Kavita brings a structured, detail-oriented approach, ensuring that both accounting and compliance functions run seamlessly and meet global expectations."</p>
+                        </div>
+                        <div class="pt-6 border-t border-slate-100">
+                            <a href="https://www.linkedin.com/in/cs-kavita-kingrani-698a34151/" target="_blank" class="inline-flex items-center gap-3 text-primary hover:text-accent transition-all font-extrabold uppercase tracking-[0.2em] text-[0.7rem]">
+                                Connect via LinkedIn <i data-lucide="linkedin" size="16"></i>
+                            </a>
+                        </div>
 
-                    <!-- Right: Countries -->
-                    <div class="fade-up" style="animation-delay: 0.1s;">
-                        <h2 class="serve-col-title">Countries We Serve</h2>
-                        <div class="serve-items-grid grid-cols-2 md:grid-cols-3">
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/in.svg" alt="India"></div>
-                                <span class="serve-text">India</span>
+                    </div>
+                    <div class="lg:col-span-5 order-1 lg:order-2 fade-up">
+                        <div class="relative">
+                            <div class="aspect-[4/5] bg-slate-200 rounded-sm overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1000&q=80&auto=format&fit=crop" alt="CS Kavita Kingrani" class="w-full h-full object-cover">
                             </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/de.svg" alt="Germany"></div>
-                                <span class="serve-text">Germany</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/us.svg" alt="United States"></div>
-                                <span class="serve-text">United States</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/it.svg" alt="Italy"></div>
-                                <span class="serve-text">Italy</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/gb.svg" alt="United Kingdom"></div>
-                                <span class="serve-text">United Kingdom</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/ae.svg" alt="UAE"></div>
-                                <span class="serve-text">UAE</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/ch.svg" alt="Switzerland"></div>
-                                <span class="serve-text">Switzerland</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/jp.svg" alt="Japan"></div>
-                                <span class="serve-text">Japan</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/sg.svg" alt="Singapore"></div>
-                                <span class="serve-text">Singapore</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/ca.svg" alt="Canada"></div>
-                                <span class="serve-text">Canada</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/fr.svg" alt="France"></div>
-                                <span class="serve-text">France</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/au.svg" alt="Australia"></div>
-                                <span class="serve-text">Australia</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/nl.svg" alt="Netherlands"></div>
-                                <span class="serve-text">Netherlands</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/ie.svg" alt="Ireland"></div>
-                                <span class="serve-text">Ireland</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/hk.svg" alt="Hong Kong"></div>
-                                <span class="serve-text">Hong Kong</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/sa.svg" alt="Saudi Arabia"></div>
-                                <span class="serve-text">Saudi Arabia</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/se.svg" alt="Sweden"></div>
-                                <span class="serve-text">Sweden</span>
-                            </div>
-                            <div class="serve-item">
-                                <div class="serve-flag"><img src="https://flagcdn.com/no.svg" alt="Norway"></div>
-                                <span class="serve-text">Norway</span>
-                            </div>
-                            <div class="serve-item">
-                                <span class="serve-text opacity-50 italic">And more...</span>
-                            </div>
+                            <div class="absolute -bottom-6 -left-6 bg-accent w-20 h-20 flex items-center justify-center shadow-xl text-white rounded-sm"><i data-lucide="file-check" size="32"></i></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="serve-footer fade-up">
-                    "Our strength lies in the ability to combine in-depth knowledge of cross sections of the industry with the specialized skills of our professionals, spreads across our widespread network."
+                <!-- Associates Section -->
+                <div class="pt-20 border-t border-slate-200">
+                    <div class="mb-12 fade-up">
+                        <span class="text-accent font-extrabold text-[0.65rem] uppercase tracking-[0.3em] mb-4 block">Our Professional Team</span>
+                        <h3 class="text-3xl font-extrabold tracking-tighter text-primary">Senior Associates</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Associate 1 -->
+                        <div class="flex items-center gap-8 p-8 bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all fade-up">
+                            <div class="w-24 h-24 bg-slate-100 rounded-sm overflow-hidden flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop" alt="CA Sagar Narang" class="w-full h-full object-cover grayscale">
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-extrabold text-primary mb-1">CA Sagar Narang</h4>
+                                <p class="text-accent font-bold text-xs uppercase tracking-widest mb-3">Senior Associate</p>
+                                <div class="flex items-center gap-4 text-text-muted text-[0.75rem] font-semibold mb-3">
+                                    <span class="flex items-center gap-2"><i data-lucide="briefcase" size="14"></i> 10+ Years Exp.</span>
+                                </div>
+                                <a href="https://www.linkedin.com/in/casagarnarang/" target="_blank" class="inline-flex items-center gap-2 text-primary hover:text-accent transition-all font-extrabold uppercase tracking-widest text-[0.65rem]">
+                                    LinkedIn Profile <i data-lucide="linkedin" size="14"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Associate 2 -->
+                        <div class="flex items-center gap-8 p-8 bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all fade-up" style="transition-delay: 0.1s;">
+                            <div class="w-24 h-24 bg-slate-100 rounded-sm overflow-hidden flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&auto=format&fit=crop" alt="CA Esha Bhatt" class="w-full h-full object-cover grayscale">
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-extrabold text-primary mb-1">CA Esha Bhatt</h4>
+                                <p class="text-accent font-bold text-xs uppercase tracking-widest mb-3">Senior Associate</p>
+                                <div class="flex items-center gap-4 text-text-muted text-[0.75rem] font-semibold mb-3">
+                                    <span class="flex items-center gap-2"><i data-lucide="briefcase" size="14"></i> 10+ Years Exp.</span>
+                                </div>
+                                <a href="https://www.linkedin.com/in/eshanarang/" target="_blank" class="inline-flex items-center gap-2 text-primary hover:text-accent transition-all font-extrabold uppercase tracking-widest text-[0.65rem]">
+                                    LinkedIn Profile <i data-lucide="linkedin" size="14"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER -->
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand">
-                    <img src="logo.png" alt="LedgerOne LLP" class="h-20 w-auto mb-6 grayscale opacity-80">
-                    <p>Premium virtual accounting, GST, compliance, and CFO services for Indian and global enterprises.</p>
-                    <div class="mt-8 flex gap-3">
-                        <a href="#" class="social-btn"><i data-lucide="linkedin" size="16"></i></a>
-                        <a href="#" class="social-btn"><i data-lucide="mail" size="16"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h5>Services</h5>
-                    <a href="index.html#services">Global Accounting</a>
-                    <a href="index.html#services">Company Setup</a>
-                    <a href="index.html#services">Indian Tax</a>
-                    <a href="index.html#services">Virtual CFO</a>
-                </div>
-                <div class="footer-col">
-                    <h5>Company</h5>
-                    <a href="about.html">About LedgerOne</a>
-                    <a href="blog.html">Blogs</a>
-                    <a href="contact.html">Contact Us</a>
-                </div>
-                <div class="footer-col">
-                    <h5>Get in Touch</h5>
-                    <a href="mailto:info@ledgeronellp.com">info@ledgeronellp.com</a>
-                    <a href="tel:+911234567890">+91 12345 67890</a>
-                    <a href="contact.html" style="background:var(--accent);color:white;padding:8px 15px;display:inline-block;margin-top:10px;">Book Now</a>
+                <div class="footer-brand"><img src="logo.png" alt="LedgerOne" class="h-20 w-auto mb-6 grayscale opacity-80"><p>Premium financial infrastructure for the modern global economy.</p></div>
+                <div class="footer-col"><h5>Services</h5><a href="index.html#services">Global & Offshore</a><a href="index.html#services">India Entry</a><a href="index.html#services">Tax & Compliance</a><a href="index.html#services">Education Accounting</a></div>
+                <div class="footer-col"><h5>Company</h5><a href="about.html">About Us</a><a href="blog.html">Blogs</a><a href="contact.html">Contact</a></div>
+                <div class="footer-col"><h5>Support</h5><a href="mailto:info@ledgeronellp.com">Email Support</a><a href="tel:+911234567890">Call Now</a></div>
+                <div class="footer-col"><h5>Connect</h5>
+                    <a href="https://www.linkedin.com/in/ca-deepesh-kingrani-34a90365/" target="_blank">CA Deepesh Kingrani</a>
+                    <a href="https://www.linkedin.com/in/cs-kavita-kingrani-698a34151/" target="_blank">CS Kavita Kingrani</a>
+                    <a href="https://www.linkedin.com/in/casagarnarang/" target="_blank">CA Sagar Narang</a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 LedgerOne LLP · New Delhi, India</p>
-                <div class="footer-legal">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms</a>
-                </div>
-            </div>
+            <div class="footer-bottom"><p>© 2026 LedgerOne LLP · New Delhi</p></div>
         </div>
     </footer>
 
     <script>
         lucide.createIcons();
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
-
+        window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40));
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
-        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-
-        const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const mobileClose = document.getElementById('mobile-close');
+        const toggleMenu = () => {
+            const isOpen = hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            mobileOverlay.classList.toggle('open');
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        };
+        hamburger.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
+        mobileClose.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', () => { if (mobileMenu.classList.contains('open')) toggleMenu(); }));
+        const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
         document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
     </script>
 </body>

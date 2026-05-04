@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact LedgerOne LLP | Premium Financial Infrastructure</title>
+    <title>Contact LedgerOne LLP | Consultation</title>
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e3a6c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 3v18h18'/><path d='m19 9-5 5-4-4-3 3'/></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +27,9 @@
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         serif: ['"Instrument Serif"', 'serif'],
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 72px rgba(0, 0, 0, 0.12)',
                     }
                 }
             }
@@ -38,6 +41,7 @@
             --primary: #0e3a6c;
             --accent: #c5a059;
             --bg: #ffffff;
+            --surface: #f7f9fc;
             --text: #0a0f14;
             --text-muted: #526071;
             --border: rgba(0, 0, 0, 0.08);
@@ -55,102 +59,208 @@
         #navbar.scrolled .nav-inner { height: 80px; }
         .logo img { height: 6rem; width: auto; transition: all 0.4s var(--ease); object-fit: contain; }
         #navbar.scrolled .logo img { height: 5.2rem; }
-        @media (max-width: 1024px) { .logo img { height: 4.8rem; } }
+
+        .nav-link { transition: all 0.3s; }
+        
+        /* Mega menu */
+        .dropdown { position: relative; }
+        .mega-menu { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%) translateY(-8px); background: #fff; border: 1px solid var(--border); box-shadow: 0 20px 72px rgba(0, 0, 0, 0.12); min-width: 1250px; opacity: 0; visibility: hidden; transition: all .3s var(--ease); }
+        .dropdown:hover .mega-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        .mega-inner { display: grid; grid-template-columns: repeat(5, 1fr); }
+        .mega-col { padding: 26px 22px; border-right: 1px solid var(--border); }
+        .mega-col:last-child { border-right: none; }
+        .mega-col-title { font-size: 0.6rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+        .mega-link { display: flex; align-items: flex-start; gap: 9px; padding: 8px 0; text-decoration: none; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; border-bottom: 1px solid rgba(0, 0, 0, .04); transition: color .2s; }
+        .mega-link:last-child { border-bottom: none; }
+        .mega-link:hover { color: var(--accent); }
+
+        @media (max-width: 1024px) { 
+            #navbar { width: 96%; left: 2%; top: 10px; }
+            .nav-inner { height: 70px; padding: 0 20px; }
+            .logo img { height: 4.4rem; } 
+            .mega-menu { display: none; }
+        }
+
+        /* ── MOBILE MENU ICON ── */
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: flex-end; gap: 6px; cursor: pointer; width: 40px; height: 40px; transition: all 0.3s; position: relative; z-index: 2001; margin-right: -8px; }
+        @media (max-width: 1024px) { .hamburger { display: flex; } }
+        .hamburger span { display: block; height: 1.5px; background: var(--primary); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 4px; }
+        .hamburger span:nth-child(1) { width: 28px; }
+        .hamburger span:nth-child(2) { width: 20px; }
+        .hamburger span:nth-child(3) { width: 26px; }
+        .hamburger.open span { background: var(--primary) !important; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); width: 28px; }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: translateX(10px); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); width: 28px; }
+
+        /* ── MOBILE MENU CONTENT ── */
+        .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0, 15, 30, 0.4); backdrop-filter: blur(4px); z-index: 1999; opacity: 0; visibility: hidden; transition: all 0.4s var(--ease); }
+        .mobile-menu-overlay.open { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; right: -100%; width: 85%; max-width: 400px; height: 100%; background: white; z-index: 2000; padding: 40px; box-shadow: -20px 0 60px rgba(0, 0, 0, 0.1); transition: all 0.5s var(--ease); overflow-y: auto; display: flex; flex-direction: column; }
+        .mobile-menu.open { right: 0; }
+        
+        .mob-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; }
+        .mob-link-main { font-size: 1.15rem; font-weight: 800; color: var(--primary) !important; text-decoration: none; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; opacity: 0; transform: translateX(20px); transition: all 0.4s var(--ease); }
+        .mobile-menu.open .mob-link-main { opacity: 1; transform: translateX(0); }
+        .sub-link { font-size: 0.9rem; font-weight: 600; color: var(--text-muted) !important; text-decoration: none; display: flex; align-items: center; gap: 10px; padding: 8px 0; }
 
         /* Page Hero */
         .page-hero { padding: 220px 0 100px; background: var(--surface); position: relative; overflow: hidden; }
+        @media (max-width: 1024px) { .page-hero { padding-top: 180px; } }
+
         .section-label { display: inline-flex; align-items: center; gap: 12px; font-size: .65rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
         .section-label::before { content: ''; display: block; width: 32px; height: 2px; background: var(--accent); }
-        .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; tracking: -0.04em; line-height: 1.1; color: var(--primary); margin-bottom: 20px; }
+        .section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; tracking: -0.04em; line-height: 1.1; color: var(--primary); margin-bottom: 30px; }
         .section-title em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--accent); }
-
-        /* Contact Form */
-        .contact-card { background: white; border: 1px solid var(--border); padding: 50px; box-shadow: 0 30px 80px rgba(0,0,0,0.05); }
-        .form-input { width: 100%; background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px 20px; outline: none; transition: all 0.3s; font-size: 0.9rem; }
-        .form-input:focus { border-color: var(--accent); background: white; }
-        .submit-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; cursor: pointer; transition: all 0.3s; }
-        .submit-btn:hover { background: var(--accent); transform: translateY(-2px); }
 
         /* Footer */
         footer { background: var(--bg); border-top: 1px solid var(--border); padding: 76px 0 38px; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 60px; }
-        @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; } } }
         .footer-col h5 { font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .18em; color: var(--text-muted); margin-bottom: 16px; }
-        .footer-col a { display: block; font-size: .82rem; color: var(--text); text-decoration: none; margin-bottom: 10px; font-weight: 600; transition: color .2s; }
-        .footer-col a:hover { color: var(--accent); }
-        .footer-bottom { border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; }
-        .footer-bottom p { font-size: .74rem; color: var(--text-muted); font-weight: 600; }
+        .footer-col a { display: block; font-size: .82rem; color: var(--text); text-decoration: none; margin-bottom: 10px; font-weight: 600; }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 30px; }
     </style>
 </head>
 
 <body>
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="container">
             <div class="nav-inner">
-                <a href="index.html" class="logo">
-                    <img src="logo.png" alt="LedgerOne LLP">
-                </a>
+                <a href="index.html" class="logo"><img src="logo.png" alt="LedgerOne LLP"></a>
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="index.html" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2">Home</a>
+                    <div class="dropdown group relative">
+                        <a href="index.html#services" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2 flex items-center gap-1">
+                            Services <i data-lucide="chevron-down" size="12"></i>
+                        </a>
+                        <div class="mega-menu absolute top-[calc(100%+6px)] left-1/2 -translate-x-1/2 -translate-y-2 bg-white border border-slate-100 shadow-premium opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-[var(--ease)] rounded-sm">
+                            <div class="mega-inner grid grid-cols-5 p-2">
+                                <!-- Global Accounting -->
+                                <div class="mega-col p-6 border-r border-slate-100">
+                                    <div class="mega-col-title">Global Accounting</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">Daily Bookkeeping</a>
+                                        <a href="index.html#services" class="mega-link">Bank Reconciliation</a>
+                                        <a href="index.html#services" class="mega-link">AP / AR Management</a>
+                                        <a href="index.html#services" class="mega-link">GAAP / IFRS Reports</a>
+                                        <a href="index.html#services" class="mega-link">White-label Support</a>
+                                    </div>
+                                </div>
+                                <!-- Virtual CFO -->
+                                <div class="mega-col p-6 border-r border-slate-100">
+                                    <div class="mega-col-title">Virtual CFO</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">MIS & KPI Dashboards</a>
+                                        <a href="index.html#services" class="mega-link">Cash Flow Forecast</a>
+                                        <a href="index.html#services" class="mega-link">Budget & Variance</a>
+                                        <a href="index.html#services" class="mega-link">Fundraising Support</a>
+                                        <a href="index.html#services" class="mega-link">Investor Reporting</a>
+                                    </div>
+                                </div>
+                                <!-- India Entry -->
+                                <div class="mega-col p-6 border-r border-slate-100">
+                                    <div class="mega-col-title">India Entry</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">Company Incorporation</a>
+                                        <a href="index.html#services" class="mega-link">GST & PAN Setup</a>
+                                        <a href="index.html#services" class="mega-link">RBI & FEMA Compliance</a>
+                                        <a href="index.html#services" class="mega-link">Transfer Pricing</a>
+                                        <a href="index.html#services" class="mega-link">Bank Account Setup</a>
+                                    </div>
+                                </div>
+                                <!-- Tax & Compliance -->
+                                <div class="mega-col p-6 border-r border-slate-100">
+                                    <div class="mega-col-title">Tax & Compliance</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">GST Returns & Audit</a>
+                                        <a href="index.html#services" class="mega-link">Income Tax Returns</a>
+                                        <a href="index.html#services" class="mega-link">TDS/TCS Compliance</a>
+                                        <a href="index.html#services" class="mega-link">ROC & Statutory Filings</a>
+                                        <a href="index.html#services" class="mega-link">GST Notice Handling</a>
+                                    </div>
+                                </div>
+                                <!-- Education Sector -->
+                                <div class="mega-col p-6">
+                                    <div class="mega-col-title">Education Sector</div>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="index.html#services" class="mega-link">Trust Registration</a>
+                                        <a href="index.html#services" class="mega-link">12A & 80G Filing</a>
+                                        <a href="index.html#services" class="mega-link">FCRA Compliance</a>
+                                        <a href="index.html#services" class="mega-link">Statutory Audit</a>
+                                        <a href="index.html#services" class="mega-link">Fee Structuring</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <a href="about.html" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2">About</a>
                     <a href="blog.html" class="nav-link text-primary/90 hover:text-primary text-[0.82rem] font-bold px-4 py-2">Blogs</a>
                     <a href="contact.html" class="nav-link text-accent text-[0.82rem] font-bold px-4 py-2 border-b-2 border-accent">Contact</a>
                 </div>
                 <a href="contact.html" class="hidden lg:block bg-accent text-white px-6 py-3 text-[0.7rem] font-bold tracking-widest uppercase no-underline">Consultation</a>
+                <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
             </div>
         </div>
     </nav>
 
+    <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="flex justify-between items-center mb-10">
+            <div><img src="logo.png" alt="LedgerOne" class="h-12 w-auto mb-2"><p class="text-[0.55rem] font-bold text-slate-400 uppercase tracking-widest">Financial Infrastructure</p></div>
+            <button class="w-10 h-10 flex items-center justify-center text-primary" id="mobile-close"><i data-lucide="x" size="24"></i></button>
+        </div>
+        <div class="flex-1">
+            <a href="index.html" class="mob-link-main"><i data-lucide="home" size="20"></i> Home</a>
+            <div class="mb-8"><span class="mob-label mb-4"><i data-lucide="briefcase" size="14" class="mr-2"></i> Services</span>
+                <div class="pl-4 border-l border-slate-100 flex flex-col gap-2">
+                    <a href="index.html#services" class="sub-link"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Global & Offshore</a>
+                    <a href="index.html#services" class="sub-link"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span> India Entry</a>
+                    <a href="index.html#services" class="sub-link"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Tax & Compliance</a>
+                    <a href="index.html#services" class="sub-link"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span> Education Sector</a>
+                </div>
+            </div>
+            <a href="about.html" class="mob-link-main"><i data-lucide="users" size="20"></i> About Us</a>
+            <a href="blog.html" class="mob-link-main"><i data-lucide="book-open" size="20"></i> Insights</a>
+            <a href="contact.html" class="mob-link-main"><i data-lucide="phone" size="20"></i> Contact</a>
+        </div>
+        <div class="mt-10 pt-8 border-t border-slate-100">
+            <a href="contact.html" class="bg-primary text-white text-center py-4 rounded-lg text-sm font-bold uppercase tracking-widest block shadow-lg">Book Consultation</a>
+        </div>
+    </div>
+
     <main>
         <section class="page-hero">
             <div class="container">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+                <div class="max-w-4xl">
+                    <span class="section-label">Get in Touch</span>
+                    <h1 class="section-title">Ready to <em>optimize</em> your financials?</h1>
+                    <p class="text-xl text-text-muted leading-relaxed">Join enterprises from 15+ countries that trust LedgerOne as their financial backbone. Reach out for a confidential consultation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24">
+            <div class="container">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
                     <div>
-                        <span class="section-label">Connect With Us</span>
-                        <h1 class="section-title">Start Your <em class="text-accent">Strategic</em> Transformation.</h1>
-                        <p class="text-xl text-text-muted leading-relaxed mb-10">Whether you are scaling a startup or optimizing a global enterprise, our experts are ready to build your financial backbone.</p>
-                        
-                        <div class="space-y-8">
-                            <div class="flex gap-5">
-                                <div class="w-12 h-12 bg-surface flex items-center justify-center text-primary"><i data-lucide="mail" size="24"></i></div>
-                                <div>
-                                    <h4 class="font-bold">Email Us</h4>
-                                    <p class="text-text-muted">info@ledgeronellp.com</p>
-                                </div>
+                        <h3 class="text-2xl font-bold text-primary mb-8">Contact Information</h3>
+                        <div class="space-y-10">
+                            <div class="flex items-start gap-6">
+                                <div class="w-12 h-12 bg-slate-50 flex items-center justify-center text-accent"><i data-lucide="mail" size="24"></i></div>
+                                <div><h4 class="font-bold text-primary uppercase tracking-widest text-xs mb-1">Email Us</h4><a href="mailto:info@ledgeronellp.com" class="text-text-muted hover:text-accent transition-colors">info@ledgeronellp.com</a></div>
                             </div>
-                            <div class="flex gap-5">
-                                <div class="w-12 h-12 bg-surface flex items-center justify-center text-primary"><i data-lucide="phone" size="24"></i></div>
-                                <div>
-                                    <h4 class="font-bold">Call Us</h4>
-                                    <p class="text-text-muted">+91 12345 67890</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-5">
-                                <div class="w-12 h-12 bg-surface flex items-center justify-center text-primary"><i data-lucide="map-pin" size="24"></i></div>
-                                <div>
-                                    <h4 class="font-bold">Our Office</h4>
-                                    <p class="text-text-muted">New Delhi, India — 110001</p>
-                                </div>
+                            <div class="flex items-start gap-6">
+                                <div class="w-12 h-12 bg-slate-50 flex items-center justify-center text-accent"><i data-lucide="phone" size="24"></i></div>
+                                <div><h4 class="font-bold text-primary uppercase tracking-widest text-xs mb-1">Call Us</h4><a href="tel:+911234567890" class="text-text-muted hover:text-accent transition-colors">+91 12345 67890</a></div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="contact-card">
-                        <form action="#" method="POST" class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <input type="text" placeholder="Full Name" class="form-input" required>
-                                <input type="email" placeholder="Work Email" class="form-input" required>
-                            </div>
-                            <select class="form-input appearance-none" required>
-                                <option value="" disabled selected>Select Service</option>
-                                <option>Global Accounting</option>
-                                <option>Indian Tax Compliance</option>
-                                <option>Virtual CFO Services</option>
-                                <option>Company Registration</option>
-                            </select>
-                            <textarea placeholder="Tell us about your requirements..." rows="5" class="form-input resize-none" required></textarea>
-                            <button type="submit" class="submit-btn">Send Inquiry</button>
+                    <div class="bg-white p-10 shadow-premium border border-slate-50">
+                        <form action="#" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><input type="text" placeholder="Your Name" class="w-full px-5 py-4 bg-slate-50 border-none outline-none text-sm"><input type="email" placeholder="Email Address" class="w-full px-5 py-4 bg-slate-50 border-none outline-none text-sm"></div>
+                            <select class="w-full px-5 py-4 bg-slate-50 border-none outline-none text-sm"><option>Select Service</option><option>Global & Offshore Bookkeeping</option><option>Virtual CFO Services</option><option>India Entry & Setup</option><option>Compliance & Tax</option><option>Education Sector CA</option></select>
+                            <textarea rows="5" placeholder="Tell us about your requirements..." class="w-full px-5 py-4 bg-slate-50 border-none outline-none text-sm resize-none"></textarea>
+                            <button type="submit" class="w-full bg-primary text-white py-5 text-xs font-extrabold uppercase tracking-[0.2em] hover:bg-accent transition-all">Send Inquiry</button>
                         </form>
                     </div>
                 </div>
@@ -161,37 +271,32 @@
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand">
-                    <img src="logo.png" alt="LedgerOne" class="h-20 w-auto mb-6 grayscale opacity-80">
-                    <p>Premium financial infrastructure for the modern global economy.</p>
-                </div>
-                <div class="footer-col">
-                    <h5>Services</h5>
-                    <a href="index.html#services">Accounting</a>
-                    <a href="index.html#services">Taxation</a>
-                    <a href="index.html#services">Compliance</a>
-                </div>
-                <div class="footer-col">
-                    <h5>Links</h5>
-                    <a href="about.html">About Us</a>
-                    <a href="blog.html">Blogs</a>
-                    <a href="contact.html">Contact</a>
-                </div>
-                <div class="footer-col">
-                    <h5>Support</h5>
-                    <a href="mailto:info@ledgeronellp.com">Email Support</a>
-                    <a href="tel:+911234567890">Call Now</a>
-                </div>
+                <div class="footer-brand"><img src="logo.png" alt="LedgerOne" class="h-20 w-auto mb-6 grayscale opacity-80"><p>Premium financial infrastructure for the modern global economy.</p></div>
+                <div class="footer-col"><h5>Services</h5><a href="index.html#services">Global & Offshore</a><a href="index.html#services">India Entry</a><a href="index.html#services">Tax & Compliance</a><a href="index.html#services">Education Accounting</a></div>
+                <div class="footer-col"><h5>Links</h5><a href="about.html">About Us</a><a href="blog.html">Blogs</a><a href="contact.html">Contact</a></div>
+                <div class="footer-col"><h5>Support</h5><a href="mailto:info@ledgeronellp.com">Email Support</a><a href="tel:+911234567890">Call Now</a></div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 LedgerOne LLP</p>
-            </div>
+            <div class="footer-bottom"><p>© 2026 LedgerOne LLP</p></div>
         </div>
     </footer>
 
     <script>
         lucide.createIcons();
         window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40));
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const mobileClose = document.getElementById('mobile-close');
+        const toggleMenu = () => {
+            const isOpen = hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            mobileOverlay.classList.toggle('open');
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        };
+        hamburger.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
+        mobileClose.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', () => { if (mobileMenu.classList.contains('open')) toggleMenu(); }));
     </script>
 </body>
 
